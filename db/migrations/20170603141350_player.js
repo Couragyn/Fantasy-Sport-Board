@@ -4,9 +4,11 @@ exports.up = function(knex, Promise) {
     table.string('name');
     table.string('position');
     table.string('team');
+    table.boolean('rookie');
     table.integer('std_adp');
     table.integer('idp_adp');
     table.integer('ppr_adp');
+    table.integer('position_adp');
   });
 };
 
