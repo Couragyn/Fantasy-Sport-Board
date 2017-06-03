@@ -20,7 +20,7 @@
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
-    "pg": "^6.0.2"
+    "pg": "^6.2.3"
   },
   "devDependencies": {
     "nodemon": "^1.9.2",
