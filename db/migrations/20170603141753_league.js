@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('league', function (table) {
     table.increments();
     table.integer('size');
-    table.dateTime('start');
+    table.string('start');
     table.integer('QB');
     table.integer('RB');
     table.integer('WR');
@@ -15,7 +15,8 @@ exports.up = function(knex, Promise) {
     table.integer('bench');
     table.integer('commish_id');
     table.string('player_pool');
-    table.string('draft_pool');
+    table.string('draft_type');
+    table.string('order_type');
   });
 };
 
