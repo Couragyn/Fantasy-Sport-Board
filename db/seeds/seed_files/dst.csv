@@ -1,0 +1,33 @@
+rank,f_name,l_name,team,rookie
+1,Denver,Broncos,DEN,FALSE
+2,Seattle,Seahawks,SEA,FALSE
+3,Kansas City,Chiefs,KC,FALSE
+4,Houston,Texans,HOU,FALSE
+5,New England,Patriots,NE,FALSE
+6,Minnesota,Vikings,MIN,FALSE
+7,Arizona,Cardinals,ARI,FALSE
+8,New York,Giants,NYG,FALSE
+9,Carolina,Panthers,CAR,FALSE
+10,Los Angeles,Rams,LAR,FALSE
+11,Baltimore,Ravens,BAL,FALSE
+12,Pittsburgh,Steelers,PIT,FALSE
+13,Jacksonville,Jaguars,JAC,FALSE
+14,Philadelphia,Eagles,PHI,FALSE
+15,Oakland,Raiders,OAK,FALSE
+16,Green Bay,Packers,GB,FALSE
+17,Cincinnati,Bengals,CIN,FALSE
+18,Los Angeles,Chargers,LAC,FALSE
+19,Atlanta,Falcons,ATL,FALSE
+20,Tampa Bay,Buccaneers,TB,FALSE
+21,Dallas,Cowboys,DAL,FALSE
+22,Miami,Dolphins,MIA,FALSE
+23,Buffalo,Bills,BUF,FALSE
+24,Tennessee,Titans,TEN,FALSE
+25,New York,Jets,NYJ,FALSE
+26,Detroit,Lions,DET,FALSE
+27,Washington,Redskins,WAS,FALSE
+28,Indianapolis,Colts,IND,FALSE
+29,Chicago,Bears,CHI,FALSE
+30,New Orleans,Saints,NO,FALSE
+31,Cleveland,Browns,CLE,FALSE
+32,San Francisco,49ers,SF,FALSE
