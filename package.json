@@ -1,5 +1,5 @@
 {
-  "name": "node-skeleton",
+  "name": "fantasy_sport_board",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "csvtojson": "^1.1.6",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
@@ -20,10 +21,10 @@
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
-    "pg": "^6.2.3"
+    "pg": "^6.0.2",
+    "socket.io": "^2.0.2"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2",
-    "sqlite3": "^3.1.4"
+    "nodemon": "^1.9.2"
   }
 }
