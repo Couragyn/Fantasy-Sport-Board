@@ -2,10 +2,9 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('draft', function (table) {
     table.increments();
     table.integer('league_id');
-    table.integer('round');
-    table.integer('pick');
-    table.integer('player_id');
-    table.integer('team_id');
+    table.string('draft_type');
+    table.boolean('rookie');
+    table.boolean('unlisted');
   });
 };
 
