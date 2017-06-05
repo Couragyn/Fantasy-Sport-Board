@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('draft_type');
     table.boolean('rookie');
     table.boolean('unlisted');
+    table.string('start');
   });
 };
 
