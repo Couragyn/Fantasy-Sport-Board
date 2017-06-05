@@ -55,11 +55,13 @@ module.exports = (knex) => {
       CB: req.body.cb,
       S: req.body.s,
       IDP: req.body.idp,
-      bench: req.body.bench,
+      Bench: req.body.Bench,
       positions: leaguePositions
     }
-    addLeague(newLeague, knex);
-    res.render("football/index.ejs");
+    let leagueID = addLeague(newLeague, knex);
+    leagueID.then(function(leagueID) {
+      res.redirect('/football/league/'+leagueID);
+    });
   });
 
   router.get("/football/league/:leagueID", (req, res) => {

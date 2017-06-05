@@ -10,9 +10,19 @@
       <h1>League <%= (data.league.id) %></h1>
     </div>
     <div class="container">
+      <h3>League Settings:</h3>
+      <p>Name - <%= (data.league.name) %> </p>
+      <p>Size - <%= (data.league.size) %></p>
+      <p>Scoring - <%= (data.league.scoring) %></p>
+      <p>Type - <%= (data.league.type) %></p>
+      <% if ((data.league.type) === 'Keeper') { %>
+        <p>Keepers - <%= (data.league.keepers) %></p>
+      <% } %>
 
-
-
+      <h3>Roster Positions:</h3>
+      <% for (var key in data.positions) {%>
+        <p> <%= key %> - <%= data.positions[key] %> </p>
+      <% } %>
     </div>
 
 
