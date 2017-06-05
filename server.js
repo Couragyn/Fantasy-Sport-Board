@@ -12,6 +12,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const createNewUser = require('./db/dbFunc/createNewUser');
 
 const footballRoutes = require("./routes/football");
 
@@ -55,14 +56,16 @@ app.post('/register', (req, res) => {
 
   let username = req.body['username'];
   let password = req.body['password'];
-  console.log(req.body);
   let newUserObj = {username: username, password: password};
-      if (!(username && password)){
-        res.status(404)
-          .send('UNACCEPTABLLEEEE');
-      } else {
-      res.redirect('/football');
-      }
+  if (!(username && password)){
+    res.status(404)
+    res.redirect('/register');
+  } else {
+    createNewUser(username, password, knex);
+    
+    res.redirect('/football');
+  }
+
 });
 
 app.listen(PORT, () => {
