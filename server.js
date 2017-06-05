@@ -8,12 +8,10 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
-
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-
 
 const footballRoutes = require("./routes/football");
 
@@ -44,6 +42,28 @@ app.get('/football/league', footballRoutes(knex));
 app.all('/football/league/create', footballRoutes(knex));
 app.get('/football/league/view', footballRoutes(knex));
 app.get('/football/league/:leagueID', footballRoutes(knex));
+
+//REGISTER
+
+app.get('/register', (req, res) => {
+  
+    res.render('register');
+  
+});
+
+app.post('/register', (req, res) => {
+
+  let username = req.body['username'];
+  let password = req.body['password'];
+  console.log(req.body);
+  let newUserObj = {username: username, password: password};
+      if (!(username && password)){
+        res.status(404)
+          .send('UNACCEPTABLLEEEE');
+      } else {
+      res.redirect('/football');
+      }
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
