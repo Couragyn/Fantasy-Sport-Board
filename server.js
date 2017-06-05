@@ -39,8 +39,11 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.redirect("/football");
 });
-
+app.get('/football', footballRoutes(knex));
+app.get('/football/league', footballRoutes(knex));
 app.all('/football/league/create', footballRoutes(knex));
+app.get('/football/league/view', footballRoutes(knex));
+app.get('/football/league/:leagueID', footballRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
