@@ -9,8 +9,17 @@ const addLeague = require("../db/dbFunc/createLeague");
 
 module.exports = (knex) => {
 
+  router.get("/football", (req, res) => {
+    res.render("football/index");
+  });
+
+  router.get("/football/league", (req, res) => {
+    res.render("football/league/index");
+  });
+
+
   router.get("/football/league/create", (req, res) => {
-    res.render("football/league/create.ejs");
+    res.render("football/league/create");
   });
 
   router.post("/football/league/create", (req, res) => {
@@ -51,6 +60,9 @@ module.exports = (knex) => {
     res.render("football/index.ejs");
   });
 
+  router.get("/football/league/:leagueID", (req, res) => {
+    res.render("football/league/view");
+  });
 
   return router;
 }
