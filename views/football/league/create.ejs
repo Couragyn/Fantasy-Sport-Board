@@ -1,19 +1,18 @@
-<% include ../partials/_header %>
+<% include ../../partials/_header %>
 
   <body>
     <div class="container">
       <h1>Create League</h1>
     </div>
-
     <div class="container">
-      <form>
+      <form action="/football/league/create" method="post">
         <div class="form-group">
           <label for="email">League Name:</label>
-          <input type="text" class="form-control" id="name">
+          <input type="text" class="form-control" id="name" name="name">
         </div>
         <div class="form-group">
           <label for="email">Number of Teams:
-          <select class="form-control" id="size">
+          <select class="form-control" id="size" name="size">
                 <option>4</option>
                 <option>5</option>
                 <option>6</option>
@@ -49,22 +48,22 @@
         <div class="form-group">
           <label for="scoring">Scoring Type:</label>
           <div class="radio">
-            <label class="radio-inline"><input type="radio" name="standard">Standard</label>
-            <label class="radio-inline"><input type="radio" name="0.5">0.5 PPR</label>
-            <label class="radio-inline"><input type="radio" name="ppr">PPR</label>
+            <label class="radio-inline"><input type="radio" name="scoring" value="standard">Standard</label>
+            <label class="radio-inline"><input type="radio" name="scoring" value="0.5">0.5 PPR</label>
+            <label class="radio-inline"><input type="radio" name="scoring" value="ppr">PPR</label>
           </div>
         </div>
         <div class="form-group">
-          <label for="league">League Type:</label>
+          <label for="type">League Type:</label>
           <div class="radio">
-            <label class="radio-inline"><input type="radio" name="redraft">Redraft</label>
-            <label class="radio-inline"><input type="radio" name="dynasty">Dynasty</label>
-            <label class="radio-inline"><input type="radio" name="keeper">Keeper</label>
+            <label class="radio-inline"><input type="radio" name="type" value="redraft">Redraft</label>
+            <label class="radio-inline"><input type="radio" name="type" value="dynasty">Dynasty</label>
+            <label class="radio-inline"><input type="radio" name="type" value="keeper">Keeper</label>
           </div>
         </div>
         <div class="form-group">
-          <label for="email">Number of Keepers:
-          <select class="form-control" id="size">
+          <label for="keepers">Number of Keepers:
+          <select class="form-control" id="keepers" name="keepers">
                 <option>0</option>
                 <option>1</option>
                 <option>2</option>
@@ -95,7 +94,7 @@
             <div class="row">
               <div class="col-xs-1">
                 <label class="text-inline">QB:
-                  <select class="form-control" id="qb">
+                  <select class="form-control" id="qb" name="qb">
                     <option>0</option>
                     <option selected="selected">1</option>
                     <option>2</option>
@@ -106,7 +105,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">RB:
-                  <select class="form-control" id="rb">
+                  <select class="form-control" id="rb" name="rb">
                     <option>0</option>
                     <option>1</option>
                     <option selected="selected">2</option>
@@ -119,7 +118,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">WR:
-                  <select class="form-control" id="wr">
+                  <select class="form-control" id="wr" name="wr">
                     <option>0</option>
                     <option>1</option>
                     <option selected="selected">2</option>
@@ -132,7 +131,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">TE:
-                  <select class="form-control" id="te">
+                  <select class="form-control" id="te" name="te">
                     <option>0</option>
                     <option selected="selected">1</option>
                     <option>2</option>
@@ -146,7 +145,7 @@
             <div class="row">
               <div class="col-xs-1">
                 <label class="text-inline">RB/WR/TE:
-                  <select class="form-control" id="rb/wr/te">
+                  <select class="form-control" id="rb_wr_te" name="rb_wr_te">
                     <option>0</option>
                     <option>1</option>
                     <option selected="selected">2</option>
@@ -159,7 +158,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">RB/TE:
-                  <select class="form-control" id="rb/te">
+                  <select class="form-control" id="rb_te" name="rb_te">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -172,7 +171,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">WR/TE:
-                  <select class="form-control" id="wr/te">
+                  <select class="form-control" id="wr_te" name="wr_te">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -185,7 +184,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">QB/WR/RB/TE:
-                  <select class="form-control" id="qb/wr/rb/te">
+                  <select class="form-control" id="qb_wr_rb_te" name="qb_wr_rb_te">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -201,7 +200,7 @@
             <div class="row">
               <div class="col-xs-1">
                 <label class="text-inline">RB/WR:
-                  <select class="form-control" id="rb/wr">
+                  <select class="form-control" id="rb_wr" name="rb_wr">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -211,9 +210,10 @@
                     <option>6</option>
                   </select>
                 </label>
-              </div>              <div class="col-xs-1">
+              </div>
+              <div class="col-xs-1">
                 <label class="text-inline">K:
-                  <select class="form-control" id="k">
+                  <select class="form-control" id="k" name="k">
                     <option>0</option>
                     <option selected="selected">1</option>
                     <option>2</option>
@@ -224,10 +224,10 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">DST:
-                  <select class="form-control" id="dst">
+                  <select class="form-control" id="dst" name="dst">
                     <option>0</option>
-                    <option>1</option>
-                    <option selected="selected">2</option>
+                    <option selected="selected">1</option>
+                    <option>2</option>
                     <option>3</option>
                     <option>4</option>
                   </select>
@@ -235,7 +235,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">Bench:
-                  <select class="form-control" id="bench">
+                  <select class="form-control" id="bench" name="bench">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -294,7 +294,7 @@
             <div class="row">
               <div class="col-xs-1">
                 <label class="text-inline">IDP Flex:
-                  <select class="form-control" id="idp">
+                  <select class="form-control" id="idp" name="idp">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -307,7 +307,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">DL:
-                  <select class="form-control" id="dl">
+                  <select class="form-control" id="dl" name="dl">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -320,7 +320,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">LB:
-                  <select class="form-control" id="lb">
+                  <select class="form-control" id="lb" name="lb">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -333,7 +333,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">DB:
-                  <select class="form-control" id="db">
+                  <select class="form-control" id="db" name="db">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -348,7 +348,7 @@
             <div class="row">
               <div class="col-xs-1">
                 <label class="text-inline">DE:
-                  <select class="form-control" id="de">
+                  <select class="form-control" id="de" name="de">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -361,7 +361,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">DT:
-                  <select class="form-control" id="dt">
+                  <select class="form-control" id="dt" name="dt">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -374,7 +374,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">CB:
-                  <select class="form-control" id="cb">
+                  <select class="form-control" id="cb" name="cb">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -387,7 +387,7 @@
               </div>
               <div class="col-xs-1">
                 <label class="text-inline">S:
-                  <select class="form-control" id="s">
+                  <select class="form-control" id="s" name="s">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>

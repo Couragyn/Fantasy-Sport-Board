@@ -28,7 +28,6 @@ exports.seed = function(knex, Promise) {
       wr_obj.push({name: jsonObj.f_name+' '+jsonObj.l_name, position: 'WR', team: jsonObj.team, rookie: jsonObj.rookie, position_adp: jsonObj.rank});
     })
 
-
   csv()
     .fromFile(__dirname+'/seed_files/te.csv')
     .on('json',(jsonObj)=>{
@@ -64,7 +63,6 @@ exports.seed = function(knex, Promise) {
     .on('json',(jsonObj)=>{
       lb_obj.push({name: jsonObj.f_name+' '+jsonObj.l_name, position: 'LB', team: jsonObj.team, rookie: jsonObj.rookie, position_adp: jsonObj.rank});
     })
-
 
   return knex('player').del()
     .then(function () {

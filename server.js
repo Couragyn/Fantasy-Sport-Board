@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.redirect("/football");
 });
 
-app.get('/football', footballRoutes());
+app.all('/football/league/create', footballRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
