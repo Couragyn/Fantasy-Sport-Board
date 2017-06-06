@@ -1,4 +1,4 @@
-// pulls up the information for viewing a league. Seperates it into league data and league positions
+// pulls up the information for viewing a league. Separates it into league data and league positions
 module.exports = function viewLeague(leagueID, knex) {
   return new Promise((resolve, reject) => {
     // Selects the general league settings
@@ -10,6 +10,7 @@ module.exports = function viewLeague(leagueID, knex) {
         knex.select('QB', 'RB', 'WR', 'TE', 'RB_WR_TE', 'RB_TE', 'WR_TE', 'QB_WR_RB_TE', 'RB_WR', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S', 'IDP', 'Bench').from('league')
           .where('id', '=', leagueID)
           .asCallback(function(err, rows2) {
+            if (err) return reject(err);
             // Removes positions that are not used in the league
             for (let key in rows2[0]){
               if (rows2[0][key] < 1) {

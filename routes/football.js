@@ -6,8 +6,7 @@ const router = express.Router();
 const positionBuilder = require("../helpers/positionBuilder");
 const addLeague = require("../db/dbFunc/createLeague");
 const viewLeague   = require('../db/dbFunc/viewLeague');
-
-
+const getTeams   = require('../db/dbFunc/getTeams');
 
 module.exports = (knex) => {
 
@@ -66,8 +65,11 @@ module.exports = (knex) => {
 
   router.get("/football/league/:leagueID", (req, res) => {
     let getLeague = viewLeague(req.params.leagueID, knex);
-    getLeague.then(function(data){
-      res.render("football/league/view", {data: data});
+    getLeague.then(function(leagueData){
+      let retrieveTeams = getTeams(req.params.leagueID, knex);
+      retrieveTeams.then(function(teamData) {
+        res.render("football/league/view", {leagueData: leagueData, teamData: teamData});
+      })
     })
   });
 
