@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -10,20 +10,20 @@ const getTeams   = require('../db/dbFunc/getTeams');
 
 module.exports = (knex) => {
 
-  router.get("/football", (req, res) => {
-    res.render("football/index");
+  router.get('/football', (req, res) => {
+    res.render('football/index');
   });
 
-  router.get("/football/league", (req, res) => {
-    res.render("football/league/index");
+  router.get('/football/league', (req, res) => {
+    res.render('football/league/index');
   });
 
 
-  router.get("/football/league/create", (req, res) => {
-    res.render("football/league/create");
+  router.get('/football/league/create', (req, res) => {
+    res.render('football/league/create');
   });
 
-  router.post("/football/league/create", (req, res) => {
+  router.post('/football/league/create', (req, res) => {
 
     // Gets the positions used for his league
     let leaguePositions = positionBuilder(req.body);
@@ -71,6 +71,7 @@ module.exports = (knex) => {
         res.render("football/league/view", {leagueData: leagueData, teamData: teamData});
       })
     })
+
   });
 
   return router;

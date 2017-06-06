@@ -6,18 +6,18 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class='container'>
       <h1>Create League</h1>
     </div>
-    <div class="container">
-      <form action="/football/league/create" method="post">
-        <div class="form-group">
-          <label for="email">League Name:</label>
-          <input type="text" class="form-control" id="name" name="name">
+    <div class='container'>
+      <form action='/football/league/create' method='post'>
+        <div class='form-group'>
+          <label for='email'>League Name:</label>
+          <input type='text' class='form-control' id='name' name='name'>
         </div>
-        <div class="form-group">
-          <label for="email">Number of Teams:
-          <select class="form-control" id="size" name="size">
+        <div class='form-group'>
+          <label for='email'>Number of Teams:
+          <select class='form-control' id='size' name='size'>
                 <option>4</option>
                 <option>5</option>
                 <option>6</option>
@@ -26,7 +26,7 @@
                 <option>9</option>
                 <option>10</option>
                 <option>11</option>
-                <option selected="selected">12</option>
+                <option selected='selected'>12</option>
                 <option>13</option>
                 <option>14</option>
                 <option>15</option>
@@ -93,27 +93,27 @@
               </select>
             </label>
         </div>
-        <div class="form-group">
-          <label for="position">Roster Positions:</label>
-          <div class="container">
-            <div class="row">
-              <div class="col-xs-1">
-                <label class="text-inline">QB:
-                  <select class="form-control" id="qb" name="qb">
+        <div class='form-group'>
+          <label for='position'>Roster Positions:</label>
+          <div class='container'>
+            <div class='row'>
+              <div class='col-xs-1'>
+                <label class='text-inline'>QB:
+                  <select class='form-control' id='qb' name='qb'>
                     <option>0</option>
-                    <option selected="selected">1</option>
+                    <option selected='selected'>1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">RB:
-                  <select class="form-control" id="rb" name="rb">
+              <div class='col-xs-1'>
+                <label class='text-inline'>RB:
+                  <select class='form-control' id='rb' name='rb'>
                     <option>0</option>
                     <option>1</option>
-                    <option selected="selected">2</option>
+                    <option selected='selected'>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
@@ -121,12 +121,12 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">WR:
-                  <select class="form-control" id="wr" name="wr">
+              <div class='col-xs-1'>
+                <label class='text-inline'>WR:
+                  <select class='form-control' id='wr' name='wr'>
                     <option>0</option>
                     <option>1</option>
-                    <option selected="selected">2</option>
+                    <option selected='selected'>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
@@ -134,11 +134,11 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">TE:
-                  <select class="form-control" id="te" name="te">
+              <div class='col-xs-1'>
+                <label class='text-inline'>TE:
+                  <select class='form-control' id='te' name='te'>
                     <option>0</option>
-                    <option selected="selected">1</option>
+                    <option selected='selected'>1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
@@ -147,13 +147,13 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-xs-1">
-                <label class="text-inline">RB/WR/TE:
-                  <select class="form-control" id="rb_wr_te" name="rb_wr_te">
+            <div class='row'>
+              <div class='col-xs-1'>
+                <label class='text-inline'>RB/WR/TE:
+                  <select class='form-control' id='rb_wr_te' name='rb_wr_te'>
                     <option>0</option>
                     <option>1</option>
-                    <option selected="selected">2</option>
+                    <option selected='selected'>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
@@ -161,22 +161,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">RB/TE:
-                  <select class="form-control" id="rb_te" name="rb_te">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                  </select>
-                </label>
-              </div>
-              <div class="col-xs-1">
-                <label class="text-inline">WR/TE:
-                  <select class="form-control" id="wr_te" name="wr_te">
+              <div class='col-xs-1'>
+                <label class='text-inline'>RB/TE:
+                  <select class='form-control' id='rb_te' name='rb_te'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -187,9 +174,22 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">QB/WR/RB/TE:
-                  <select class="form-control" id="qb_wr_rb_te" name="qb_wr_rb_te">
+              <div class='col-xs-1'>
+                <label class='text-inline'>WR/TE:
+                  <select class='form-control' id='wr_te' name='wr_te'>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                  </select>
+                </label>
+              </div>
+              <div class='col-xs-1'>
+                <label class='text-inline'>QB/WR/RB/TE:
+                  <select class='form-control' id='qb_wr_rb_te' name='qb_wr_rb_te'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -202,10 +202,10 @@
               </div>
 
             </div>
-            <div class="row">
-              <div class="col-xs-1">
-                <label class="text-inline">RB/WR:
-                  <select class="form-control" id="rb_wr" name="rb_wr">
+            <div class='row'>
+              <div class='col-xs-1'>
+                <label class='text-inline'>RB/WR:
+                  <select class='form-control' id='rb_wr' name='rb_wr'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -216,22 +216,22 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">K:
-                  <select class="form-control" id="k" name="k">
+              <div class='col-xs-1'>
+                <label class='text-inline'>K:
+                  <select class='form-control' id='k' name='k'>
                     <option>0</option>
-                    <option selected="selected">1</option>
+                    <option selected='selected'>1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">DST:
-                  <select class="form-control" id="dst" name="dst">
+              <div class='col-xs-1'>
+                <label class='text-inline'>DST:
+                  <select class='form-control' id='dst' name='dst'>
                     <option>0</option>
-                    <option selected="selected">1</option>
+                    <option selected='selected'>1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
@@ -247,7 +247,7 @@
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
-                    <option selected="selected">6</option>
+                    <option selected='selected'>6</option>
                     <option>7</option>
                     <option>8</option>
                     <option>9</option>
@@ -296,10 +296,10 @@
                 </label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-xs-1">
-                <label class="text-inline">IDP Flex:
-                  <select class="form-control" id="idp" name="idp">
+            <div class='row'>
+              <div class='col-xs-1'>
+                <label class='text-inline'>IDP Flex:
+                  <select class='form-control' id='idp' name='idp'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -310,9 +310,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">DL:
-                  <select class="form-control" id="dl" name="dl">
+              <div class='col-xs-1'>
+                <label class='text-inline'>DL:
+                  <select class='form-control' id='dl' name='dl'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -323,9 +323,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">LB:
-                  <select class="form-control" id="lb" name="lb">
+              <div class='col-xs-1'>
+                <label class='text-inline'>LB:
+                  <select class='form-control' id='lb' name='lb'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -336,9 +336,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">DB:
-                  <select class="form-control" id="db" name="db">
+              <div class='col-xs-1'>
+                <label class='text-inline'>DB:
+                  <select class='form-control' id='db' name='db'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -350,10 +350,10 @@
                 </label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-xs-1">
-                <label class="text-inline">DE:
-                  <select class="form-control" id="de" name="de">
+            <div class='row'>
+              <div class='col-xs-1'>
+                <label class='text-inline'>DE:
+                  <select class='form-control' id='de' name='de'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -364,9 +364,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">DT:
-                  <select class="form-control" id="dt" name="dt">
+              <div class='col-xs-1'>
+                <label class='text-inline'>DT:
+                  <select class='form-control' id='dt' name='dt'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -377,9 +377,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">CB:
-                  <select class="form-control" id="cb" name="cb">
+              <div class='col-xs-1'>
+                <label class='text-inline'>CB:
+                  <select class='form-control' id='cb' name='cb'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -390,9 +390,9 @@
                   </select>
                 </label>
               </div>
-              <div class="col-xs-1">
-                <label class="text-inline">S:
-                  <select class="form-control" id="s" name="s">
+              <div class='col-xs-1'>
+                <label class='text-inline'>S:
+                  <select class='form-control' id='s' name='s'>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -407,7 +407,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type='submit' class='btn btn-default'>Submit</button>
       </form>
     </div>
   </body>
