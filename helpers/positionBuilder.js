@@ -1,46 +1,46 @@
 module.exports = function positionBuilder(data) {
 
-  // If a position is selected, it adds it to an array. This array is later used to list the applicable players for the leagues draft
-  let leaguePositions = [];
+  // If a position is selected, it adds it to an array. This array is later used to list the applicable players for the leagues draft. Using a concatanated string as db datatype is tring
+  let leaguePositions = '';
   if (data.qb > 0 || data.qb_wr_rb_te > 0) {
-    leaguePositions.push("QB");
+    leaguePositions += "QB,";
   }data
   if (data.rb > 0 || data.rb_wr_te > 0 || data.rb_te > 0 || data.qb_wr_rb_te > 0 || data.rb_wr > 0) {
-    leaguePositions.push("RB");
+    leaguePositions += "RB,";
   }
   if (data.wr > 0 || data.rb_wr_te > 0 || data.qb_wr_rb_te > 0 || data.rb_wr > 0 || data.wr_te > 0) {
-    leaguePositions.push("WR");
+    leaguePositions += "WR,";
   }
   if (data.te > 0 || data.rb_wr_te > 0 || data.rb_te > 0 || data.qb_wr_rb_te > 0 || data.wr_te > 0) {
-    leaguePositions.push("TE");
+    leaguePositions += "TE,";
   }
   if (data.k > 0) {
-    leaguePositions.push("K");
+    leaguePositions += "K,";
   }
   if (data.dst > 0) {
-    leaguePositions.push("DST");
+    leaguePositions += "DST,";
   }
   if (data.dl > 0 || data.idp > 0 ) {
-    leaguePositions.push("DL");
+    leaguePositions += "DL,";
   }
   if (data.lb > 0 || data.idp > 0 ) {
-    leaguePositions.push("LB");
+    leaguePositions += "LB,";
   }
   if (data.db > 0 || data.idp > 0 ) {
-    leaguePositions.push("DB");
+    leaguePositions += "DB,";
   }
   if (data.de > 0 || data.idp > 0 ) {
-    leaguePositions.push("DE");
+    leaguePositions += "DE,";
   }
   if (data.dt > 0 || data.idp > 0 ) {
-    leaguePositions.push("DT");
+    leaguePositions += "DT,";
   }
   if (data.cb > 0 || data.idp > 0 ) {
-    leaguePositions.push("CB");
+    leaguePositions += "CB,";
   }
   if (data.s > 0 || data.idp > 0 ) {
-    leaguePositions.push("S");
+    leaguePositions += "S,";
   }
-
-  return leaguePositions;
+  // removes last comma
+  return leaguePositions.slice(0, -1);
 }

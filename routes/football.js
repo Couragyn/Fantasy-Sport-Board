@@ -3,9 +3,10 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
-const positionBuilder = require('../helpers/positionBuilder');
-const addLeague = require('../db/dbFunc/createLeague');
-
+const positionBuilder = require("../helpers/positionBuilder");
+const addLeague = require("../db/dbFunc/createLeague");
+const viewLeague   = require('../db/dbFunc/viewLeague');
+const getTeams   = require('../db/dbFunc/getTeams');
 
 module.exports = (knex) => {
 
@@ -53,15 +54,24 @@ module.exports = (knex) => {
       CB: req.body.cb,
       S: req.body.s,
       IDP: req.body.idp,
-      bench: req.body.bench,
+      Bench: req.body.Bench,
       positions: leaguePositions
     }
-    addLeague(newLeague, knex);
-    res.render('football/index.ejs');
+    let leagueID = addLeague(newLeague, knex);
+    leagueID.then(function(leagueID) {
+      res.redirect('/football/league/'+leagueID);
+    });
   });
 
-  router.get('/football/league/:leagueID', (req, res) => {
-    res.render('football/league/view');
+  router.get("/football/league/:leagueID", (req, res) => {
+    let getLeague = viewLeague(req.params.leagueID, knex);
+    getLeague.then(function(leagueData){
+      let retrieveTeams = getTeams(req.params.leagueID, knex);
+      retrieveTeams.then(function(teamData) {
+        res.render("football/league/view", {leagueData: leagueData, teamData: teamData});
+      })
+    })
+
   });
 
   return router;

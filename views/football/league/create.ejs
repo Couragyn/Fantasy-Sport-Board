@@ -1,4 +1,9 @@
-<% include ../../partials/_header %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../../partials/_header %>
+    <title>Create League</title>
+  </head>
 
   <body>
     <div class='container'>
@@ -45,25 +50,25 @@
               </select>
             </label>
         </div>
-        <div class='form-group'>
-          <label for='scoring'>Scoring Type:</label>
-          <div class='radio'>
-            <label class='radio-inline'><input type='radio' name='scoring' value='standard'>Standard</label>
-            <label class='radio-inline'><input type='radio' name='scoring' value='0.5'>0.5 PPR</label>
-            <label class='radio-inline'><input type='radio' name='scoring' value='ppr'>PPR</label>
+        <div class="form-group">
+          <label for="scoring">Scoring Type:</label>
+          <div class="radio">
+            <label class="radio-inline"><input type="radio" name="scoring" value="Standard">Standard</label>
+            <label class="radio-inline"><input type="radio" name="scoring" value="0.5 PPR">0.5 PPR</label>
+            <label class="radio-inline"><input type="radio" name="scoring" value="PPR">PPR</label>
           </div>
         </div>
-        <div class='form-group'>
-          <label for='type'>League Type:</label>
-          <div class='radio'>
-            <label class='radio-inline'><input type='radio' name='type' value='redraft'>Redraft</label>
-            <label class='radio-inline'><input type='radio' name='type' value='dynasty'>Dynasty</label>
-            <label class='radio-inline'><input type='radio' name='type' value='keeper'>Keeper</label>
+        <div class="form-group">
+          <label for="type">League Type:</label>
+          <div class="radio">
+            <label class="radio-inline leagueType"><input type="radio" name="type" value="Redraft">Redraft</label>
+            <label class="radio-inline leagueType"><input type="radio" name="type" value="Dynasty">Dynasty</label>
+            <label class="radio-inline leagueType"><input type="radio" name="type" id="keeperType" value="Keeper">Keeper</label>
           </div>
         </div>
-        <div class='form-group'>
-          <label for='keepers'>Number of Keepers:
-          <select class='form-control' id='keepers' name='keepers'>
+        <div class="form-group hide" id="keeper">
+          <label for="keepers">Number of Keepers:
+          <select class="form-control" id="keepers" name="keepers">
                 <option>0</option>
                 <option>1</option>
                 <option>2</option>
@@ -233,9 +238,9 @@
                   </select>
                 </label>
               </div>
-              <div class='col-xs-1'>
-                <label class='text-inline'>Bench:
-                  <select class='form-control' id='bench' name='bench'>
+              <div class="col-xs-1">
+                <label class="text-inline">Bench:
+                  <select class="form-control" id="Bench" name="Bench">
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>

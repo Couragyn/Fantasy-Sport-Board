@@ -1,18 +1,43 @@
-<% include ../../partials/_header %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../../partials/_header %>
+    <title>League <%= (leagueData.league.id) %></title>
+  </head>
 
   <body>
-    <div class='container'>
-      <h1>Football Home</h1>
+    <div class="container">
+      <h1>League <%= (leagueData.league.id) %></h1>
     </div>
 
+    <div class="container">
+      <a>Edit League</a> <a>Create Draft</a>
+    </div>
 
+    <div class="container">
+      <h3>Teams:</h3>
+      <% teamData.forEach(function(team) { %>
+        <p><%= (team.name) %> - <%= (team.draft_position) %> - <a>claim team</a></p>
+      <% }); %>
+    </div>
 
+    <div class="container">
+      <h3>League Settings:</h3>
+      <p>Name - <%= (leagueData.league.name) %> </p>
+      <p>Size - <%= (leagueData.league.size) %></p>
+      <p>Scoring - <%= (leagueData.league.scoring) %></p>
+      <p>Type - <%= (leagueData.league.type) %></p>
+      <% if ((leagueData.league.type) === 'Keeper') { %>
+        <p>Keepers - <%= (leagueData.league.keepers) %></p>
+      <% } %>
+    </div>
 
-
-
-
-
-
+    <div class="container">
+      <h3>Roster Positions:</h3>
+      <% for (var key in leagueData.positions) { %>
+        <p> <%= key.replace(/_/g, '/') %> - <%= leagueData.positions[key] %> </p>
+      <% } %>
+    </div>
 
   </body>
 </html>
