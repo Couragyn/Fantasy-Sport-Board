@@ -44,7 +44,7 @@ app.get('/football/league', footballRoutes(knex));
 app.all('/football/league/create', footballRoutes(knex));
 app.get('/football/league/view', footballRoutes(knex));
 app.get('/football/league/:leagueID', footballRoutes(knex));
-app.all('/register', regitserRoutes(knex));
+app.all('/register', registerRoutes(knex));
 
 app.listen(PORT, () => {
   console.log('Example app listening on port ' + PORT);
