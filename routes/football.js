@@ -1,28 +1,28 @@
-"use strict";
+'use strict';
 
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
-const positionBuilder = require("../helpers/positionBuilder");
-const addLeague = require("../db/dbFunc/createLeague");
+const positionBuilder = require('../helpers/positionBuilder');
+const addLeague = require('../db/dbFunc/createLeague');
 
 
 module.exports = (knex) => {
 
-  router.get("/football", (req, res) => {
-    res.render("football/index");
+  router.get('/football', (req, res) => {
+    res.render('football/index');
   });
 
-  router.get("/football/league", (req, res) => {
-    res.render("football/league/index");
+  router.get('/football/league', (req, res) => {
+    res.render('football/league/index');
   });
 
 
-  router.get("/football/league/create", (req, res) => {
-    res.render("football/league/create");
+  router.get('/football/league/create', (req, res) => {
+    res.render('football/league/create');
   });
 
-  router.post("/football/league/create", (req, res) => {
+  router.post('/football/league/create', (req, res) => {
 
     // Gets the positions used for his league
     let leaguePositions = positionBuilder(req.body);
@@ -57,11 +57,11 @@ module.exports = (knex) => {
       positions: leaguePositions
     }
     addLeague(newLeague, knex);
-    res.render("football/index.ejs");
+    res.render('football/index.ejs');
   });
 
-  router.get("/football/league/:leagueID", (req, res) => {
-    res.render("football/league/view");
+  router.get('/football/league/:leagueID', (req, res) => {
+    res.render('football/league/view');
   });
 
   return router;
