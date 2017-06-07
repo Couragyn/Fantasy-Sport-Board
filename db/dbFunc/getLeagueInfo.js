@@ -1,4 +1,4 @@
-// pulls up the information for viewing a league. Separates it into league data and league positions
+// pulls up the league settings info
 module.exports = function getLeagueInfo(leagueID, knex) {
   return new Promise((resolve, reject) => {
     // Selects the general league settings

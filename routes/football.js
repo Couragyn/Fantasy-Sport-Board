@@ -10,6 +10,8 @@ const viewLeaguePositions = require('../db/dbFunc/getLeaguePositions');
 const getTeams = require('../db/dbFunc/getTeams');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
+const createDraftPicks = require("../db/dbFunc/createDraftPicks");
+
 
 
 module.exports = (knex) => {
@@ -100,11 +102,12 @@ module.exports = (knex) => {
       start_type: req.body.start,
       date_time: draftDate
     }
-    console.log(draftDate);
     let addDraft = createDraft(newDraft, knex);
     addDraft.then(function(draftID) {
-      console.log(draftID);
-      res.redirect(draftID[0]);
+      let makeDraftPicks = createDraftPicks(draftID[0], knex);
+      makeDraftPicks.then(function() {
+        res.redirect(draftID[0]);
+      })
     })
   });
 
