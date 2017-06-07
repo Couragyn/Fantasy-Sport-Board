@@ -45,6 +45,8 @@ app.get('/football/league', footballRoutes(knex));
 app.all('/football/league/create', footballRoutes(knex));
 app.get('/football/league/view', footballRoutes(knex));
 app.get('/football/league/:leagueID', footballRoutes(knex));
+app.all('/football/league/:leagueID/draft/create', footballRoutes(knex));
+app.get('/football/league/:leagueID/draft/:draftID', footballRoutes(knex));
 app.all('/register', registerRoutes(knex));
 app.all('/login', loginRoutes(knex));
 

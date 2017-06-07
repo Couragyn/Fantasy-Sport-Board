@@ -5,8 +5,12 @@ const express = require('express');
 const router = express.Router();
 const positionBuilder = require("../helpers/positionBuilder");
 const addLeague = require("../db/dbFunc/createLeague");
-const viewLeague   = require('../db/dbFunc/viewLeague');
-const getTeams   = require('../db/dbFunc/getTeams');
+const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
+const viewLeaguePositions = require('../db/dbFunc/getLeaguePositions');
+const getTeams = require('../db/dbFunc/getTeams');
+const getCurrentYear = require('../helpers/getCurrentYear');
+const createDraft = require("../db/dbFunc/createDraft");
+
 
 module.exports = (knex) => {
 
@@ -24,7 +28,6 @@ module.exports = (knex) => {
   });
 
   router.post('/football/league/create', (req, res) => {
-
     // Gets the positions used for his league
     let leaguePositions = positionBuilder(req.body);
 
@@ -64,14 +67,49 @@ module.exports = (knex) => {
   });
 
   router.get("/football/league/:leagueID", (req, res) => {
-    let getLeague = viewLeague(req.params.leagueID, knex);
-    getLeague.then(function(leagueData){
-      let retrieveTeams = getTeams(req.params.leagueID, knex);
-      retrieveTeams.then(function(teamData) {
-        res.render("football/league/view", {leagueData: leagueData, teamData: teamData});
+    let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+    getLeagueInfo.then(function(leagueData){
+      let getLeaguePositons = viewLeaguePositions(req.params.leagueID, knex);
+      getLeaguePositons.then(function(leaguePositions) {
+        let retrieveTeams = getTeams(req.params.leagueID, knex);
+        retrieveTeams.then(function(teamData) {
+          res.render("football/league/view", {leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+        })
       })
     })
+  });
 
+  router.get("/football/league/:leagueID/draft/create", (req, res) => {
+    let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+    getLeagueInfo.then(function(leagueData){
+      res.render("football/draft/create", {leagueData: leagueData});
+    })
+  });
+
+  router.post("/football/league/:leagueID/draft/create", (req, res) => {
+    let draftDate = null;
+    if (req.body.date) {
+      draftDate = req.body.date;
+    }
+    const newDraft = {
+      league_id: req.params.leagueID,
+      year: getCurrentYear(),
+      rounds: req.body.rounds,
+      draft_type: req.body.draftType,
+      rookie: req.body.rookie,
+      start_type: req.body.start,
+      date_time: draftDate
+    }
+    console.log(draftDate);
+    let addDraft = createDraft(newDraft, knex);
+    addDraft.then(function(draftID) {
+      console.log(draftID);
+      res.redirect(draftID[0]);
+    })
+  });
+
+  router.get("/football/league/:leagueID/draft/:draftID", (req, res) => {
+    res.render("football/draft/view");
   });
 
   return router;

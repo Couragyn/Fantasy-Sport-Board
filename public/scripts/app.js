@@ -8,14 +8,4 @@ $(document).ready(function() {
       $('#keeper').addClass("hide");
     }
   });
-
-  $.ajax({
-    url: 'route/action/',
-    type: 'POST',
-    data: 'your form data',
-    success: function(response){
-      alert('get outta here with my eye holes');
-    }
-  }); 
-
 });

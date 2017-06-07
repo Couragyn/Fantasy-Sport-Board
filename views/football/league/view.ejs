@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <% include ../../partials/_header %>
-    <title>League <%= (leagueData.league.id) %></title>
+    <title><%= (leagueData.name) %></title>
   </head>
 
   <body>
     <div class="container">
-      <h1>League <%= (leagueData.league.id) %></h1>
+      <h1><%= (leagueData.name) %> - League <%= (leagueData.id) %></h1>
     </div>
 
     <div class="container">
-      <a>Edit League</a> <a>Create Draft</a>
+      <a>Edit League</a> <a href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
     </div>
 
     <div class="container">
@@ -23,19 +23,19 @@
 
     <div class="container">
       <h3>League Settings:</h3>
-      <p>Name - <%= (leagueData.league.name) %> </p>
-      <p>Size - <%= (leagueData.league.size) %></p>
-      <p>Scoring - <%= (leagueData.league.scoring) %></p>
-      <p>Type - <%= (leagueData.league.type) %></p>
-      <% if ((leagueData.league.type) === 'Keeper') { %>
-        <p>Keepers - <%= (leagueData.league.keepers) %></p>
+      <p>Name - <%= (leagueData.name) %> </p>
+      <p>Size - <%= (leagueData.size) %></p>
+      <p>Scoring - <%= (leagueData.scoring) %></p>
+      <p>Type - <%= (leagueData.type) %></p>
+      <% if ((leagueData.type) === 'Keeper') { %>
+        <p>Keepers - <%= (leagueData.keepers) %></p>
       <% } %>
     </div>
 
     <div class="container">
       <h3>Roster Positions:</h3>
-      <% for (var key in leagueData.positions) { %>
-        <p> <%= key.replace(/_/g, '/') %> - <%= leagueData.positions[key] %> </p>
+      <% for (var key in leaguePositions) { %>
+        <p> <%= key.replace(/_/g, '/') %> - <%= leaguePositions[key] %> </p>
       <% } %>
     </div>
 
