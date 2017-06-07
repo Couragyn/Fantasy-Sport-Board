@@ -6,8 +6,13 @@ const router = express.Router();
 
 module.exports = (knex) => {
 
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
+
   router.get('/football', (req, res) => {
-    res.render('football/index');
+    res.render('football/index', {user: req.session.user_id});
   });
 
   return router;
