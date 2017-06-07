@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     table.integer('player_id');
     table.integer('team_id');
     table.boolean('unlisted');
-    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('created_at');
   });
 };
 

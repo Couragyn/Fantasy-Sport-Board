@@ -26,7 +26,7 @@ exports.up = function(knex, Promise) {
     table.integer('CB');
     table.integer('S');
     table.integer('IDP');
-    table.integer('bench');
+    table.integer('Bench');
     table.string('positions');
   });
 };
