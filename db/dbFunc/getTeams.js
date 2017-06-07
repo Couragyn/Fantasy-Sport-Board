@@ -1,8 +1,8 @@
-// returns the team information
+// returns the team information for a league
 module.exports = function getTeams(leagueID, knex) {
   teamsData = [];
   return new Promise((resolve, reject) => {
-    knex.select('team_id', 'name', 'draft_position').from('league_team').rightJoin('team', 'league_team.team_id', 'team.id')
+    knex.select('id', 'name', 'draft_position').from('team')
       .where('league_id', '=', leagueID)
       .orderBy('draft_position')
       .asCallback(function(err, rows) {

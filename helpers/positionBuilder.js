@@ -1,6 +1,6 @@
 module.exports = function positionBuilder(data) {
 
-  // If a position is selected, it adds it to an array. This array is later used to list the applicable players for the leagues draft. Using a concatanated string as db datatype is tring
+  // If a position is selected, it adds it to an array. This array is later used to list the applicable players for the leagues draft. DB datatype is sting. Also accounts for flex (multiple accepted) positions.
   let leaguePositions = '';
   if (data.qb > 0 || data.qb_wr_rb_te > 0) {
     leaguePositions += "QB,";
