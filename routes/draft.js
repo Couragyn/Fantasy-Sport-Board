@@ -7,13 +7,19 @@ const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
 const createDraftPicks = require("../db/dbFunc/createDraftPicks");
+const cookieSession = require('cookie-session');
 
 module.exports = (knex) => {
+
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
 
   router.get("/football/league/:leagueID/draft/create", (req, res) => {
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
-      res.render("football/draft/create", {leagueData: leagueData});
+      res.render("football/draft/create", {user: req.session.user_id, leagueData: leagueData});
     })
   });
 
@@ -42,7 +48,7 @@ module.exports = (knex) => {
   });
 
   router.get("/football/league/:leagueID/draft/:draftID", (req, res) => {
-    res.render("football/draft/view");
+    res.render("football/draft/view", {user: req.session.user_id});
   });
 
   return router;

@@ -8,15 +8,21 @@ const addLeague = require("../db/dbFunc/createLeague");
 const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const viewLeaguePositions = require('../db/dbFunc/getLeaguePositions');
 const getTeams = require('../db/dbFunc/getTeams');
+const cookieSession = require('cookie-session');
 
 module.exports = (knex) => {
 
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
+
   router.get('/football/league', (req, res) => {
-    res.render('football/league/index');
+    res.render('football/league/index', {user: req.session.user_id});
   });
 
   router.get('/football/league/create', (req, res) => {
-    res.render('football/league/create');
+    res.render('football/league/create', {user: req.session.user_id});
   });
 
   router.post('/football/league/create', (req, res) => {
@@ -65,7 +71,7 @@ module.exports = (knex) => {
       getLeaguePositons.then(function(leaguePositions) {
         let retrieveTeams = getTeams(req.params.leagueID, knex);
         retrieveTeams.then(function(teamData) {
-          res.render("football/league/view", {leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          res.render("football/league/view", {user: req.session.user_id, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
         })
       })
     })
