@@ -18,6 +18,7 @@ module.exports = (knex) => {
   });
 
   router.post("/football/league/:leagueID/draft/create", (req, res) => {
+    // manual drafts don't use this field. this sets it to null if it's not used
     let draftDate = null;
     if (req.body.date) {
       draftDate = req.body.date;
