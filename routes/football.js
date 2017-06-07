@@ -10,21 +10,26 @@ const viewLeaguePositions = require('../db/dbFunc/getLeaguePositions');
 const getTeams = require('../db/dbFunc/getTeams');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
-
+const cookieSession = require('cookie-session');
 
 module.exports = (knex) => {
 
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
+
   router.get('/football', (req, res) => {
-    res.render('football/index');
+    res.render('football/index', {user: req.session.user_id});
   });
 
   router.get('/football/league', (req, res) => {
-    res.render('football/league/index');
+    res.render('football/league/index', {user: req.session.user_id});
   });
 
 
   router.get('/football/league/create', (req, res) => {
-    res.render('football/league/create');
+    res.render('football/league/create', {user: req.session.user_id});
   });
 
   router.post('/football/league/create', (req, res) => {
@@ -73,7 +78,7 @@ module.exports = (knex) => {
       getLeaguePositons.then(function(leaguePositions) {
         let retrieveTeams = getTeams(req.params.leagueID, knex);
         retrieveTeams.then(function(teamData) {
-          res.render("football/league/view", {leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          res.render("football/league/view", {user: req.session.user_id, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
         })
       })
     })
@@ -82,7 +87,7 @@ module.exports = (knex) => {
   router.get("/football/league/:leagueID/draft/create", (req, res) => {
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
-      res.render("football/draft/create", {leagueData: leagueData});
+      res.render("football/draft/create", {user: req.session.user_id, leagueData: leagueData});
     })
   });
 
@@ -109,7 +114,7 @@ module.exports = (knex) => {
   });
 
   router.get("/football/league/:leagueID/draft/:draftID", (req, res) => {
-    res.render("football/draft/view");
+    res.render("football/draft/view", {user: req.session.user_id});
   });
 
   return router;
