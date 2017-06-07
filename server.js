@@ -16,6 +16,7 @@ const createNewUser = require('./db/dbFunc/createNewUser');
 
 const footballRoutes = require('./routes/football');
 const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -45,6 +46,7 @@ app.all('/football/league/create', footballRoutes(knex));
 app.get('/football/league/view', footballRoutes(knex));
 app.get('/football/league/:leagueID', footballRoutes(knex));
 app.all('/register', registerRoutes(knex));
+app.all('/login', loginRoutes(knex));
 
 app.listen(PORT, () => {
   console.log('Example app listening on port ' + PORT);
