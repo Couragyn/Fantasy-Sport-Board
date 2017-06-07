@@ -1,5 +1,5 @@
-// returns the team information for
-module.exports = function viewLeague(leagueID, knex) {
+// returns the team information
+module.exports = function getTeams(leagueID, knex) {
   teamsData = [];
   return new Promise((resolve, reject) => {
     knex.select('team_id', 'name', 'draft_position').from('league_team').rightJoin('team', 'league_team.team_id', 'team.id')
