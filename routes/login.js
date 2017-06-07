@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const validateLogin= require('../db/dbFunc/validateLogin');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
 
@@ -27,8 +28,9 @@ module.exports = (knex) => {
             } else {
                 const login = validateLogin(username, knex);
                 login.then(function(login){
-                    console.log('password:', login);
-                    if (password === login) {
+                    console.log('login:', login, 'password:', password);
+
+                    if (bcrypt.compareSync(password, login)) {
                         res.redirect('/football');
                     } else {
                         res.redirect('/login');
