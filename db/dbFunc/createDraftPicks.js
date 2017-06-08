@@ -30,7 +30,7 @@ module.exports = function createDraft(draftID, knex) {
             // Keeps track of the teams in draft position, while the loop goes through backwards. Resets each round
             let team = 0;
             for(let pick = rows.length; pick >= 1; pick--) {
-              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pick, team_id: rows[pick-1].id})
+              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pick, team_id: rows[team].id})
               .catch(function(err){
                 console.log(err);
               })

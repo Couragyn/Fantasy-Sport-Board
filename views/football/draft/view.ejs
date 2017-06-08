@@ -9,7 +9,33 @@
     <div class="container">
       <h1>Draft</h1>
     </div>
+    <div class="container">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th></th>
+            <% for (var i = 0; i < teams.length; i++) { %>
+              <th><%= teams[i].name %></th>
+            <% } %>
+          </tr>
+          <% var currentPosition = 0; %>
+          <% for (var round = 1; round <= info.rounds; round++) { %>
+            <tr>
+              <th><%= round %></th>
+                <% for (var i = 0; i < teams.length; i++) {  %>
+                  <td>
+                    <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
+                    <p><%= picks[currentPosition].team_id %></p>
+                    <p><%= currentPosition %></p>
+                  </td>
+                <% currentPosition ++; %>
+                <% } %>
 
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
 
   </body>
 </html>

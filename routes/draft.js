@@ -7,6 +7,10 @@ const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
 const createDraftPicks = require("../db/dbFunc/createDraftPicks");
+const getDraftPicks = require("../db/dbFunc/getDraftPicks");
+const getDraftInfo = require("../db/dbFunc/getDraftInfo");
+const getTeams = require('../db/dbFunc/getTeams');
+
 
 module.exports = (knex) => {
 
@@ -18,7 +22,7 @@ module.exports = (knex) => {
   });
 
   router.post("/football/league/:leagueID/draft/create", (req, res) => {
-    // manual drafts don't use this field. this sets it to null if it's not used
+    // manual drafts don't use this field. this sets it to null if date draft
     let draftDate = null;
     if (req.body.date) {
       draftDate = req.body.date;
@@ -42,7 +46,17 @@ module.exports = (knex) => {
   });
 
   router.get("/football/league/:leagueID/draft/:draftID", (req, res) => {
-    res.render("football/draft/view");
+    let draftPicks = getDraftPicks(req.params.draftID, knex);
+    draftPicks.then(function(picks) {
+      let draftInfo = getDraftInfo(req.params.draftID, knex);
+      draftInfo.then(function(info) {
+        let viewTeams = getTeams(req.params.leagueID, knex);
+        viewTeams.then(function(teams) {
+          console.log(picks);
+          res.render("football/draft/view", {picks: picks, info: info, teams: teams });
+        })
+      })
+    })
   });
 
   return router;
