@@ -11,13 +11,19 @@ const getDraftPicks = require("../db/dbFunc/getDraftPicks");
 const getDraftInfo = require("../db/dbFunc/getDraftInfo");
 const getTeams = require('../db/dbFunc/getTeams');
 
+const cookieSession = require('cookie-session');
 
 module.exports = (knex) => {
+
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
 
   router.get("/football/league/:leagueID/draft/create", (req, res) => {
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
-      res.render("football/draft/create", {leagueData: leagueData});
+      res.render("football/draft/create", {user: req.session.user_id, leagueData: leagueData});
     })
   });
 
