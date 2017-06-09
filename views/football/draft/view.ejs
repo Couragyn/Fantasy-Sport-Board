@@ -10,7 +10,72 @@
     <div class="container">
       <h1>Draft</h1>
     </div>
-
+    <div class="container">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th></th>
+            <% for (var i = 0; i < teams.length; i++) { %>
+              <th><%= teams[i].name %></th>
+            <% } %>
+          </tr>
+          <!-- Keeps track of where we are in the picks object (what round, pick, etc) -->
+          <% var currentPosition = 0; %>
+          <% for (var round = 1; round <= info.rounds; round++) { %>
+            <tr>
+              <th><%= round %></th>
+              <!-- Standard drafts have the same order each round. It is created accordingly -->
+              <% if (info.draft_type === "Standard") {%>
+                <% for (var i = 0; i < teams.length; i++) {  %>
+                  <td>
+                    <p><%= picks[currentPosition].name %></p>
+                    <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
+                    <% if (i + 1 === teams.length) {  %>
+                      <p>\/</p>
+                    <% } else { %>
+                      <p>></p>
+                    <% } %>
+                  </td>
+                  <% currentPosition ++; %>
+                <% } %>
+                <!-- If it not a standard draft, then it is a snake draft. Every second round has reverse order. It is created accordingly -->
+              <% } else { %>
+                <!-- If even round, draw normally -->
+                <% if (round % 2 != 0 ) { %>
+                  <% for (var i = 0; i < teams.length; i++) {  %>
+                    <td>
+                      <p><%= picks[currentPosition].name %></p>
+                      <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
+                      <% if (i + 1 === teams.length) {  %>
+                        <p>\/</p>
+                      <% } else { %>
+                        <p>></p>
+                      <% } %>
+                    </td>
+                    <% currentPosition ++; %>
+                  <% } %>
+                  <!-- if odd round, draw reverse -->
+                <% } else { %>
+                  <% for (var i = 0; i < teams.length; i++) {  %>
+                  <%var backPick = currentPosition + 11 - i; %>
+                    <td>
+                      <p><%= picks[backPick].name %></p>
+                      <p><%= picks[backPick].round %>.<%= picks[backPick].pick %></p>
+                      <% if (i === 0) {  %>
+                        <p>\/</p>
+                      <% } else { %>
+                        <p><</p>
+                      <% } %>
+                    </td>
+                  <% } %>
+                  <% currentPosition += 12; %>
+                <% } %>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
 
   </body>
 </html>
