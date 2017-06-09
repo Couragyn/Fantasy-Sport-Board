@@ -13,4 +13,3 @@ module.exports = function getDraftPicks(draftID, knex) {
   })
 }
 
-
