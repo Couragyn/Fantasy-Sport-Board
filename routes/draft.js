@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
+const cookieSession = require('cookie-session');
 const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
@@ -10,8 +11,6 @@ const createDraftPicks = require("../db/dbFunc/createDraftPicks");
 const getDraftPicks = require("../db/dbFunc/getDraftPicks");
 const getDraftInfo = require("../db/dbFunc/getDraftInfo");
 const getTeams = require('../db/dbFunc/getTeams');
-
-const cookieSession = require('cookie-session');
 
 module.exports = (knex) => {
 
