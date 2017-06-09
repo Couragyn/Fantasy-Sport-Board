@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
+const cookieSession = require('cookie-session');
 const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const getCurrentYear = require('../helpers/getCurrentYear');
 const createDraft = require("../db/dbFunc/createDraft");
@@ -11,13 +12,17 @@ const getDraftPicks = require("../db/dbFunc/getDraftPicks");
 const getDraftInfo = require("../db/dbFunc/getDraftInfo");
 const getTeams = require('../db/dbFunc/getTeams');
 
-
 module.exports = (knex) => {
+
+  router.use(cookieSession({
+        name: 'session',
+        secret: 'urlshy5hdyjtid'
+    }))
 
   router.get("/football/league/:leagueID/draft/create", (req, res) => {
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
-      res.render("football/draft/create", {leagueData: leagueData});
+      res.render("football/draft/create", {user: req.session.user_id, leagueData: leagueData});
     })
   });
 
