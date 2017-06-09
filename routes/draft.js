@@ -52,7 +52,6 @@ module.exports = (knex) => {
       draftInfo.then(function(info) {
         let viewTeams = getTeams(req.params.leagueID, knex);
         viewTeams.then(function(teams) {
-          console.log(picks);
           res.render("football/draft/view", {picks: picks, info: info, teams: teams });
         })
       })
