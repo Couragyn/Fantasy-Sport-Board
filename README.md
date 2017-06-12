@@ -4,7 +4,8 @@
 
 - ES6 (Server-side)
 - ES5 (Client-side)
-- Node, Express
+- Node
+- Express
 - RESTful routes
 - Bootstrap 3
 - PostgreSQL
