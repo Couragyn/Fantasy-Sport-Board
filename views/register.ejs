@@ -1,23 +1,26 @@
 <% include ./partials/_head %>
 
 <body>
-    <h1>REGISTER</h1>
-    <form action='/register' method='POST'>
-        <div class='form-group'>
-            <label for='username'>userame</label>
-            <input type='text' name='username' class='form-control' id='username'>
-        </div>
-        <div class='form-group'>
-            <label for='email'>email</label>
-            <input type='text' name='email' class='form-control' id='email'>
-        </div>
-        <div class='form-group'>
-            <label for='password'>password</label>
-            <input type='password' name='password' class='form-control' id='password'>
-        </div>
-        <div>
-            <button type='submit' value='Send' id='submit' class='form-control'>submit</button>
-        </div>
-    </form>
+    <% include partials/_nav %>
+    <div class='container'>
+      <h1>Register</h1>
+      <form action='/register' method='POST'>
+          <div class='form-group'>
+              <label for='username'>Userame</label>
+              <input type='text' name='username' class='form-control' id='username'>
+          </div>
+          <div class='form-group'>
+              <label for='email'>Email</label>
+              <input type='text' name='email' class='form-control' id='email'>
+          </div>
+          <div class='form-group'>
+              <label for='password'>Password</label>
+              <input type='password' name='password' class='form-control' id='password'>
+          </div>
+          <div>
+            <button type='submit' class='btn btn-default'>Submit</button>
+          </div>
+      </form>
+    </div>
 </body>
 
