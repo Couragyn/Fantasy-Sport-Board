@@ -18,51 +18,60 @@ module.exports = (knex) => {
     }))
 
   router.get('/football/league', (req, res) => {
-    res.render('football/league/index', {userID: req.session.user_id, username: req.session.username});
+    res.render('football/league/index', {username: req.session.username});
   });
 
   router.get('/football/league/create', (req, res) => {
-    res.render('football/league/create', {userID: req.session.user_id, username: req.session.username});
+    if (req.session.userID) {
+      res.render('football/league/create', {username: req.session.username});
+    } else {
+      res.redirect('/login');
+    }
   });
 
   router.post('/football/league/create', (req, res) => {
-    // Gets the positions used for his league
-    let leaguePositions = positionBuilder(req.body);
+    if (req.session.userID) {
+      // Gets the positions used for his league
+      let leaguePositions = positionBuilder(req.body);
 
-    // sets the form data to a JSON object
-    const newLeague = {
-      name: req.body.name,
-      password: req.body.password,
-      size: req.body.size,
-      scoring: req.body.scoring,
-      type: req.body.type,
-      keepers: req.body.keepers,
-      QB: req.body.qb,
-      RB: req.body.rb,
-      WR: req.body.wr,
-      TE: req.body.te,
-      RB_WR_TE: req.body.rb_wr_te,
-      RB_TE: req.body.rb_te,
-      WR_TE: req.body.wr_te,
-      QB_WR_RB_TE: req.body.qb_wr_rb_te,
-      RB_WR: req.body.rb_wr,
-      K: req.body.k,
-      DST: req.body.dst,
-      DL: req.body.dl,
-      LB: req.body.lb,
-      DB: req.body.db,
-      DE: req.body.de,
-      DT: req.body.dt,
-      CB: req.body.cb,
-      S: req.body.s,
-      IDP: req.body.idp,
-      Bench: req.body.Bench,
-      positions: leaguePositions
+      // sets the form data to a JSON object
+      const newLeague = {
+        name: req.body.name,
+        password: req.body.password,
+        size: req.body.size,
+        scoring: req.body.scoring,
+        type: req.body.type,
+        keepers: req.body.keepers,
+        QB: req.body.qb,
+        RB: req.body.rb,
+        WR: req.body.wr,
+        TE: req.body.te,
+        RB_WR_TE: req.body.rb_wr_te,
+        RB_TE: req.body.rb_te,
+        WR_TE: req.body.wr_te,
+        QB_WR_RB_TE: req.body.qb_wr_rb_te,
+        RB_WR: req.body.rb_wr,
+        K: req.body.k,
+        DST: req.body.dst,
+        DL: req.body.dl,
+        LB: req.body.lb,
+        DB: req.body.db,
+        DE: req.body.de,
+        DT: req.body.dt,
+        CB: req.body.cb,
+        S: req.body.s,
+        IDP: req.body.idp,
+        Bench: req.body.Bench,
+        positions: leaguePositions,
+        commish_id: req.session.userID
+      }
+      let leagueID = addLeague(newLeague, knex);
+      leagueID.then(function(leagueID) {
+        res.redirect('/football/league/'+leagueID);
+      });
+    } else {
+      res.redirect('/login');
     }
-    let leagueID = addLeague(newLeague, knex);
-    leagueID.then(function(leagueID) {
-      res.redirect('/football/league/'+leagueID);
-    });
   });
 
   router.get("/football/league/:leagueID", (req, res) => {
@@ -72,10 +81,18 @@ module.exports = (knex) => {
       getLeaguePositons.then(function(leaguePositions) {
         let retrieveTeams = getTeams(req.params.leagueID, knex);
         retrieveTeams.then(function(teamData) {
-          res.render("football/league/view", {userID: req.session.user_id, username: req.session.username, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          res.render("football/league/view", {userID: req.session.userID, username: req.session.username, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
         })
       })
     })
+  });
+
+  router.get("/football/league/:leagueID", (req, res) => {
+    if (req.session.userID) {
+      res.render('football/league/claim', {username: req.session.username});
+    } else {
+      res.redirect('/login');
+    }
   });
 
   return router;

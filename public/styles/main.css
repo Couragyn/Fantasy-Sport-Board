@@ -1,0 +1,32 @@
+body, html {
+  height: 100%;
+}
+body {
+  background-color: #fff;
+  padding-top: 65px;
+
+}
+
+.center_div {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.navbar-login
+{
+    width: 200px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
