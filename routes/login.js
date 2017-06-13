@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const validateLogin= require('../db/dbFunc/validateLogin');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
-const getUser = require('../db/dbFunc/getUser');
+const getUserID = require('../db/dbFunc/getUserID');
 
 
 module.exports = (knex) => {
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
         const login = validateLogin(username, knex);
         login.then(function(login){
           if (bcrypt.compareSync(password, login)) {
-            const userInfo = getUser(username, knex);
+            const userInfo = getUserID(username, knex);
             userInfo.then(function(userID) {
               req.session.userID = userID;
               req.session.username = username;
