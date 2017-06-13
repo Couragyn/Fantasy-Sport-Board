@@ -32,6 +32,7 @@ module.exports = (knex) => {
     // sets the form data to a JSON object
     const newLeague = {
       name: req.body.name,
+      password: req.body.password,
       size: req.body.size,
       scoring: req.body.scoring,
       type: req.body.type,

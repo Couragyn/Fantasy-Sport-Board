@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% include ../../partials/_header %>
+    <% include ../../partials/_head %>
     <title><%= (leagueData.name) %></title>
   </head>
 
   <body>
-    
-    <div class="container">
+
+    <div class="container center_div">
       <h1><%= (leagueData.name) %> - League <%= (leagueData.id) %></h1>
     </div>
 
-    <div class="container">
+    <div class="container center_div">
       <a>Edit League</a> <a href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
     </div>
 
-    <div class="container">
+    <div class="container center_div">
       <h3>Teams:</h3>
       <% teamData.forEach(function(team) { %>
         <p><%= (team.name) %> - <%= (team.draft_position) %> - <a>claim team</a></p>
       <% }); %>
     </div>
 
-    <div class="container">
+    <div class="container center_div">
       <h3>League Settings:</h3>
       <p>Name - <%= (leagueData.name) %> </p>
       <p>Size - <%= (leagueData.size) %></p>
@@ -33,7 +33,7 @@
       <% } %>
     </div>
 
-    <div class="container">
+    <div class="container center_div">
       <h3>Roster Positions:</h3>
       <% for (var key in leaguePositions) { %>
         <p> <%= key.replace(/_/g, '/') %> - <%= leaguePositions[key] %> </p>
