@@ -11,15 +11,16 @@
     <div class="container center_div">
       <h1><%= (leagueData.name) %> - League <%= (leagueData.id) %></h1>
     </div>
-
-    <div class="container center_div">
-      <a>Edit League</a> <a href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
-    </div>
+    <% if (leagueData.commish_id === userID) { %>
+      <div class="container center_div">
+        <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
+      </div>
+    <% } %>
 
     <div class="container center_div">
       <h3>Teams:</h3>
       <% teamData.forEach(function(team) { %>
-        <p><%= (team.name) %> - <%= (team.draft_position) %> - <a>claim team</a></p>
+        <p><%= (team.name) %> - <%= (team.draft_position) %> - <a class='btn btn-sm btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
       <% }); %>
     </div>
 
@@ -31,6 +32,11 @@
       <p>Type - <%= (leagueData.type) %></p>
       <% if ((leagueData.type) === 'Keeper') { %>
         <p>Keepers - <%= (leagueData.keepers) %></p>
+      <% } %>
+      <% if (leagueData.commish_id === userID) { %>
+        <div class="container center_div">
+          <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/edit">Edit League</a>
+        </div>
       <% } %>
     </div>
 
