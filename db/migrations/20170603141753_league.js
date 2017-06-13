@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.integer('commish_id');
     table.string('name');
+    table.string('password');
     table.integer('size');
     table.string('scoring');
     table.string('type');
@@ -26,7 +27,7 @@ exports.up = function(knex, Promise) {
     table.integer('CB');
     table.integer('S');
     table.integer('IDP');
-    table.integer('bench');
+    table.integer('Bench');
     table.string('positions');
   });
 };
