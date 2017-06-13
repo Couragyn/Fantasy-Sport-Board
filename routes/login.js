@@ -7,43 +7,46 @@ const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const validateLogin= require('../db/dbFunc/validateLogin');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
+const getUser = require('../db/dbFunc/getUser');
+
 
 module.exports = (knex) => {
 
-    router.use(cookieSession({
-        name: 'session',
-        secret: 'urlshy5hdyjtid'
-    }))
+  router.use(cookieSession({
+    name: 'session',
+    secret: 'urlshy5hdyjtid'
+  }))
 
-    router.get('/login', (req, res) => {
+  router.get('/login', (req, res) => {
+    res.render('login', {userID: req.session.user_id, username: req.session.username});
+  });
 
-        res.render('login', {user: req.session.user_id});
-  
-    });
+router.post('/login', (req, res) => {
 
-    router.post('/login', (req, res) => {
+    let username = req.body['username'];
+    let password = req.body['password'];
 
-        let username = req.body['username'];
-        let password = req.body['password'];
-
-        const validate = validateUniqueUsername(username, knex);
-        validate.then(function(validate){
-         
-            if (validate === 1){ 
-                res.redirect('/login');
-            } else {
-                const login = validateLogin(username, knex);
-                login.then(function(login){
-                    if (bcrypt.compareSync(password, login)) {
-                        req.session.user_id = username;
-                        res.redirect('/football');
-                    } else {
-                        res.redirect('/login');
-                    }
-                });        
-            }
+    const validate = validateUniqueUsername(username, knex);
+    validate.then(function(validateResults){
+      if (validateResults){
+        res.redirect('/login');
+      } else {
+        const login = validateLogin(username, knex);
+        login.then(function(login){
+          if (bcrypt.compareSync(password, login)) {
+            const userInfo = getUser(username, knex);
+            userInfo.then(function(userID) {
+              req.session.userID = userID;
+              req.session.username = username;
+              res.redirect('/football');
+            })
+          } else {
+            res.redirect('/login');
+          }
         });
-    })
+      }
+    });
+  })
 
  return router;
 }

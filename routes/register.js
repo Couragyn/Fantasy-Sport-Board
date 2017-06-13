@@ -16,9 +16,9 @@ module.exports = (knex) => {
   }))
 
   router.get('/register', (req, res) => {
-      
-      res.render('register', {user: req.session.user_id});
-   
+
+    res.render('register', {userID: req.session.user_id, username: req.session.username});
+
   });
 
   router.post('/register', (req, res) => {
@@ -28,17 +28,17 @@ module.exports = (knex) => {
     let password = bcrypt.hashSync(req.body['password'], 10);
 
     const validate = validateUniqueUsername(username, knex);
-    validate.then(function(validate){
-    
-      if (!(username && email && password) || validate !== 1 || username === 'username'){
+    validate.then(function(validateResults){
+      if (!(username && email && password) || !validateResults){
         res.status(404);
         res.redirect('/register');
       } else {
-        createNewUser(username, email, password, knex);
-        req.session.user_id = username;
-        res.redirect('/football');
+        createNewUser(username, email, password, knex).then(function(userID) {
+          req.session.userID = userID;
+          req.session.username = username;
+          res.redirect('/football');
+        })
       }
-
     });
   })
  return router;

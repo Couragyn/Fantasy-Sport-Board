@@ -18,11 +18,11 @@ module.exports = (knex) => {
     }))
 
   router.get('/football/league', (req, res) => {
-    res.render('football/league/index', {user: req.session.user_id});
+    res.render('football/league/index', {userID: req.session.user_id, username: req.session.username});
   });
 
   router.get('/football/league/create', (req, res) => {
-    res.render('football/league/create', {user: req.session.user_id});
+    res.render('football/league/create', {userID: req.session.user_id, username: req.session.username});
   });
 
   router.post('/football/league/create', (req, res) => {
@@ -72,7 +72,7 @@ module.exports = (knex) => {
       getLeaguePositons.then(function(leaguePositions) {
         let retrieveTeams = getTeams(req.params.leagueID, knex);
         retrieveTeams.then(function(teamData) {
-          res.render("football/league/view", {user: req.session.user_id, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          res.render("football/league/view", {userID: req.session.user_id, username: req.session.username, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
         })
       })
     })

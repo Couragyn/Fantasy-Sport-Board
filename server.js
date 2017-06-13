@@ -65,7 +65,8 @@ app.get('/football/league/:leagueID/draft/:draftID', draftRoutes(knex));
 app.all('/register', registerRoutes(knex));
 app.all('/login', loginRoutes(knex));
 app.get('/logout', (req, res) => {
- req.session.user_id = null;
+ req.session.userID = null;
+ req.session.username = null;
  res.redirect('/');
 });
 

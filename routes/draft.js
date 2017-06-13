@@ -22,7 +22,7 @@ module.exports = (knex) => {
   router.get("/football/league/:leagueID/draft/create", (req, res) => {
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
-      res.render("football/draft/create", {user: req.session.user_id, leagueData: leagueData});
+      res.render("football/draft/create", {userID: req.session.user_id, username: req.session.username, leagueData: leagueData});
     })
   });
 
@@ -57,7 +57,7 @@ module.exports = (knex) => {
       draftInfo.then(function(info) {
         let viewTeams = getTeams(req.params.leagueID, knex);
         viewTeams.then(function(teams) {
-          res.render("football/draft/view", {user: req.session.user_id, picks: picks, info: info, teams: teams });
+          res.render("football/draft/view", {userID: req.session.user_id, username: req.session.username, picks: picks, info: info, teams: teams });
         })
       })
     })
