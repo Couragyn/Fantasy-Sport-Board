@@ -30,3 +30,11 @@ body {
 {
     font-size: 87px;
 }
+
+.cell:hover {
+  background: #eff3f9;
+}
+
+.rotate-arrow {
+  transform: rotate(45deg);
+}

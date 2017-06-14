@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
     <% include ../../partials/_head %>
     <title>Draft %></title>
@@ -7,11 +7,11 @@
 
   <body>
     <% include ../../partials/_nav %>
-    <div class="container">
+    <div class='container'>
       <h1>Draft</h1>
     </div>
-    <div class="container">
-      <table class="table table-bordered">
+    <div class='container'>
+      <table class='table table-bordered'>
         <tbody>
           <tr>
             <th></th>
@@ -25,15 +25,17 @@
             <tr>
               <th><%= round %></th>
               <!-- Standard drafts have the same order each round. It is created accordingly -->
-              <% if (info.draft_type === "Standard") {%>
+              <% if (info.draft_type === 'Standard') {%>
                 <% for (var i = 0; i < teams.length; i++) {  %>
-                  <td>
+                  <td class='cell'>
                     <p><%= picks[currentPosition].name %></p>
                     <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
-                    <% if (i + 1 === teams.length) {  %>
-                      <p>\/</p>
+                    <% if (i + 1 === teams.length && info.rounds === round) {  %>
+                      <span class='glyphicon glyphicon-thumbs-up'></span>
+                    <% } else if (i + 1 === teams.length) { %>
+                      <span class='glyphicon glyphicon-arrow-down rotate-arrow'></span>
                     <% } else { %>
-                      <p>></p>
+                      <span class='glyphicon glyphicon-arrow-right'></span>
                     <% } %>
                   </td>
                   <% currentPosition ++; %>
@@ -43,13 +45,15 @@
                 <!-- If even round, draw normally -->
                 <% if (round % 2 != 0 ) { %>
                   <% for (var i = 0; i < teams.length; i++) {  %>
-                    <td>
+                    <td class='cell'>
                       <p><%= picks[currentPosition].name %></p>
                       <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
-                      <% if (i + 1 === teams.length) {  %>
-                        <p>\/</p>
+                      <% if (i + 1 === teams.length && info.rounds === round) {  %>
+                        <span class='glyphicon glyphicon-thumbs-up'></span>
+                       <% } else if (i + 1 === teams.length) { %>
+                        <span class='glyphicon glyphicon-arrow-down'></span>
                       <% } else { %>
-                        <p>></p>
+                        <span class='glyphicon glyphicon-arrow-right'></span>
                       <% } %>
                     </td>
                     <% currentPosition ++; %>
@@ -58,13 +62,15 @@
                 <% } else { %>
                   <% for (var i = 0; i < teams.length; i++) {  %>
                   <%var backPick = currentPosition + 11 - i; %>
-                    <td>
+                    <td class='cell'>
                       <p><%= picks[backPick].name %></p>
                       <p><%= picks[backPick].round %>.<%= picks[backPick].pick %></p>
-                      <% if (i === 0) {  %>
-                        <p>\/</p>
+                      <% if (i === 0 && info.rounds === round) {  %>
+                        <span class='glyphicon glyphicon-thumbs-up'></span>
+                      <% } else if (i === 0 && info.rounds !== round) { %>
+                        <span class='glyphicon glyphicon-arrow-down'></span>
                       <% } else { %>
-                        <p><</p>
+                        <span class='glyphicon glyphicon-arrow-left'></span>
                       <% } %>
                     </td>
                   <% } %>
@@ -79,3 +85,5 @@
 
   </body>
 </html>
+
+<!--info.rounds === round-->
