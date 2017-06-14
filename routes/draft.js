@@ -37,9 +37,10 @@ module.exports = (knex) => {
       year: getCurrentYear(),
       rounds: req.body.rounds,
       draft_type: req.body.draftType,
-      rookie: req.body.rookie,
+      pool: req.body.pool,
       start_type: req.body.start,
-      date_time: draftDate
+      date_time: draftDate,
+      status: 'Not Started'
     }
     let addDraft = createDraft(newDraft, knex);
     addDraft.then(function(draftID) {

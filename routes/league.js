@@ -9,6 +9,9 @@ const viewLeagueInfo = require('../db/dbFunc/getLeagueInfo');
 const viewLeaguePositions = require('../db/dbFunc/getLeaguePositions');
 const getTeams = require('../db/dbFunc/getTeams');
 const cookieSession = require('cookie-session');
+const addTeamUser = require('../db/dbFunc/addTeamUser');
+const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
+
 
 module.exports = (knex) => {
 
@@ -63,7 +66,7 @@ module.exports = (knex) => {
         IDP: req.body.idp,
         Bench: req.body.Bench,
         positions: leaguePositions,
-        commish_id: req.session.userID
+        commish_id: parseInt(req.session.userID)
       }
       let leagueID = addLeague(newLeague, knex);
       leagueID.then(function(leagueID) {
@@ -81,15 +84,37 @@ module.exports = (knex) => {
       getLeaguePositons.then(function(leaguePositions) {
         let retrieveTeams = getTeams(req.params.leagueID, knex);
         retrieveTeams.then(function(teamData) {
-          res.render("football/league/view", {userID: req.session.userID, username: req.session.username, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          let leagueDraftInfo = getLeagueDraftInfo(req.params.leagueID, knex);
+          leagueDraftInfo.then(function(draftInfo) {
+            console.log(draftInfo);
+            res.render("football/league/view", {userID: req.session.userID, username: req.session.username, draftData: draftInfo, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+          })
         })
       })
     })
   });
 
-  router.get("/football/league/:leagueID", (req, res) => {
+  router.get("/football/league/:leagueID/claim/:teamID", (req, res) => {
     if (req.session.userID) {
-      res.render('football/league/claim', {username: req.session.username});
+      res.render('football/league/claim', {username: req.session.username, leagueID: req.params.leagueID, teamID: req.params.teamID});
+    } else {
+      res.redirect('/login');
+    }
+  });
+
+  router.post("/football/league/:leagueID/claim/:teamID", (req, res) => {
+    if (req.session.userID) {
+      let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+      getLeagueInfo.then(function(leagueData){
+        if(leagueData.password === req.body.password) {
+          let addTeam = addTeamUser(req.params.teamID, req.params.leagueID, knex);
+          addTeam.then(function(){
+            res.redirect('/football/league/'+req.params.leagueID);
+          })
+        } else {
+          res.redirect('/football/league/${parseInt(req.params.leagueID)}/claim/${parseInt(req.params.teamID)}');
+        }
+      })
     } else {
       res.redirect('/login');
     }

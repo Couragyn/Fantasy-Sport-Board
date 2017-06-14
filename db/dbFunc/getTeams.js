@@ -2,7 +2,7 @@
 module.exports = function getTeams(leagueID, knex) {
   teamsData = [];
   return new Promise((resolve, reject) => {
-    knex.select('id', 'name', 'draft_position').from('team')
+    knex.select('team.id', 'name', 'draft_position', 'user_id', 'username').from('team').leftJoin('users', 'users.id', 'team.user_id')
       .where('league_id', '=', leagueID)
       .orderBy('draft_position')
       .asCallback(function(err, rows) {
