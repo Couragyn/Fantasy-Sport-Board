@@ -6,7 +6,7 @@ module.exports = function createNewUser(username, email, password, knex) {
         resolve(userID);
       })
       .catch(function(err){
-        resolve(err);
+        console.log(err);
       })
   })
 }

@@ -10,14 +10,11 @@
 
     <div class='container'>
       <h1>League Password</h1>
-      <form action='/login' method='POST'>
+      <p>Enter the league password provided by the league creator</p>
+      <form action='/football/league/<%= leagueID %>/claim/<%= teamID %>' method='POST'>
         <div class='form-group'>
-          <label for='username'>Userame</label>
-          <input type='text' name='username' class='form-control' id='username'>
-        </div>
-        <div class='form-group'>
-          <label for='password'>Password</label>
-          <input type='password' name='password' class='form-control' id='password'>
+          <label for='password'>League Password</label>
+          <input type='text' name='password' class='form-control' id='password'>
         </div>
         <div>
           <button type='submit' class='btn btn-default'>Submit</button>

@@ -12,7 +12,7 @@ module.exports = function createLeague(league, knex) {
         }
       })
       .catch(function(err){
-        resolve(err);
+        console.log(err);
       })
   })
 }

@@ -9,21 +9,62 @@
     <% include ../../partials/_nav %>
 
     <div class="container center_div">
-      <h1><%= (leagueData.name) %> - League <%= (leagueData.id) %></h1>
+      <h1>League <%= (leagueData.name) %></h1>
     </div>
-    <% if (leagueData.commish_id === userID) { %>
-      <div class="container center_div">
-        <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
-      </div>
-    <% } %>
-
     <div class="container center_div">
-      <h3>Teams:</h3>
-      <% teamData.forEach(function(team) { %>
-        <p><%= (team.name) %> - <%= (team.draft_position) %> - <a class='btn btn-sm btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
-      <% }); %>
-    </div>
+      <div class="col-md-6">
+        <h3>Teams</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Team Name</th>
+              <th>Draft Position</th>
+              <th>Owner</th>
+            </tr>
+            <% teamData.forEach(function(team) { %>
+              <tr>
+                <td><%= (team.name) %></td>
+                <td><%= (team.draft_position) %></td>
+                <td>
+                  <% if (team.user_id > 0) { %>
+                    <%= team.username %>
+                  <% } else { %>
+                    <a class='btn btn-sm btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
+                  <% } %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
 
+      <div class="col-md-6">
+        <h3>Drafts</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Draft ID</th>
+              <th>Player Pool</th>
+              <th>Order</th>
+              <th>Status</th>
+            </tr>
+            <% draftData.forEach(function(draft) { %>
+              <tr>
+                <td><a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/draft/<%= (draft.id) %>">Draft <%= draft.id %></a></td>
+                <td><%= draft.pool %></td>
+                <td><%= draft.draft_type %></td>
+                <td><%= draft.status %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% if (leagueData.commish_id == userID) { %>
+          <div class="container center_div">
+            <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
     <div class="container center_div">
       <h3>League Settings:</h3>
       <p>Name - <%= (leagueData.name) %> </p>

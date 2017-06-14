@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.integer('league_id');
     table.string('name');
     table.integer('draft_position');
+    table.integer('user_id');
   });
 };
 

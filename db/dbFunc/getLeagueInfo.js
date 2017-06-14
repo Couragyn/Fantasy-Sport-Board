@@ -2,7 +2,7 @@
 module.exports = function getLeagueInfo(leagueID, knex) {
   return new Promise((resolve, reject) => {
     // Selects the general league settings
-    knex.select('id', 'commish_id', 'name', 'size', 'scoring', 'type', 'keepers', 'positions').from('league')
+    knex.select('id', 'commish_id', 'name', 'size', 'scoring', 'type', 'keepers', 'positions', 'password').from('league')
       .where('id', '=', leagueID)
       .asCallback(function(err, rows) {
         if (err) return reject(err);
