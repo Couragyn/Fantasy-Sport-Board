@@ -10,7 +10,8 @@ module.exports = function createDraft(draftID, knex) {
         if (rows[0].draft_type === 'Standard') {
           for (let round = 1; round <= rows[0].rounds; round++) {
             for(let pick = 1; pick <= rows.length; pick++) {
-              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pick, team_id: rows[pick-1].id})
+              console.log(pad(pick));
+              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pad(pick), team_id: rows[pick-1].id})
               .catch(function(err){
                 console.log(err);
               })
@@ -20,7 +21,7 @@ module.exports = function createDraft(draftID, knex) {
         } else if (rows[0].draft_type === 'Snake') {
           for (let round = 1; round <= rows[0].rounds; round += 2) {
             for(let pick = 1; pick <= rows.length; pick++) {
-              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pick, team_id: rows[pick-1].id})
+              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pad(pick), team_id: rows[pick-1].id})
               .catch(function(err){
                 console.log(err);
               })
@@ -30,7 +31,7 @@ module.exports = function createDraft(draftID, knex) {
             // Keeps track of the teams in draft position, while the loop goes through backwards. Resets each round
             let team = 0;
             for(let pick = rows.length; pick >= 1; pick--) {
-              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pick, team_id: rows[team].id})
+              knex('draft_picks').insert({draft_id: draftID, round: round, pick: pad(pick), team_id: rows[team].id})
               .catch(function(err){
                 console.log(err);
               })
@@ -45,3 +46,6 @@ module.exports = function createDraft(draftID, knex) {
   })
 }
 
+function pad(d) {
+    return (d < 10) ? '0' + d.toString() : d.toString();
+}
