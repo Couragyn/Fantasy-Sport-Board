@@ -29,7 +29,7 @@
                   <% if (team.user_id > 0) { %>
                     <%= team.username %>
                   <% } else { %>
-                    <a class='btn btn-sm btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
+                    <a class='btn btn-xs btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
                   <% } %>
                 </td>
               </tr>
@@ -63,29 +63,66 @@
             <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/draft/create">New Draft</a>
           </div>
         <% } %>
+        <h5>Draft Notes</h5>
+        <ol>New drafts can be created by the commisioner</ol>
+        <ol>The draft starts when the commisioner manually starts it</ol>
+        <ol>The commisioner can skip a pick, or enter a pick for any team</ol>
+        <ol>There is no auto-pick. A counter keeps track how long it has been since the last pick</ol>
+
       </div>
     </div>
     <div class="container center_div">
-      <h3>League Settings:</h3>
-      <p>Name - <%= (leagueData.name) %> </p>
-      <p>Size - <%= (leagueData.size) %></p>
-      <p>Scoring - <%= (leagueData.scoring) %></p>
-      <p>Type - <%= (leagueData.type) %></p>
-      <% if ((leagueData.type) === 'Keeper') { %>
-        <p>Keepers - <%= (leagueData.keepers) %></p>
-      <% } %>
-      <% if (leagueData.commish_id === userID) { %>
-        <div class="container center_div">
-          <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/edit">Edit League</a>
-        </div>
-      <% } %>
-    </div>
-
-    <div class="container center_div">
-      <h3>Roster Positions:</h3>
-      <% for (var key in leaguePositions) { %>
-        <p> <%= key.replace(/_/g, '/') %> - <%= leaguePositions[key] %> </p>
-      <% } %>
+      <div class="col-md-6">
+        <h3>Roster Requirements</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Position</th>
+              <th>Number</th>
+            </tr>
+            <% for (var key in leaguePositions) { %>
+              <tr>
+                <td><%= key.replace(/_/g, '/') %></td>
+                <td><%= leaguePositions[key] %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <h3>League Settings</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td><%= (leagueData.name) %></td>
+            </tr>
+            <tr>
+              <td>Size</td>
+              <td><%= (leagueData.size) %></td>
+            </tr>
+            <tr>
+              <td>Scoring</td>
+              <td><%= (leagueData.scoring) %></td>
+            </tr>
+            <tr>
+              <td>Type</td>
+              <td><%= (leagueData.type) %></td>
+            </tr>
+            <% if ((leagueData.type) === 'Keeper') { %>
+              <tr>
+                <td>Keepers</td>
+                <td><%= (leagueData.keepers) %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <% if (leagueData.commish_id == userID) { %>
+          <div class="container center_div">
+            <a class='btn btn-default' href="/football/league/<%= (leagueData.id) %>/edit">Edit League</a>
+          </div>
+        <% } %>
+      </div>
     </div>
 
   </body>
