@@ -8,6 +8,7 @@ const createNewUser = require('../db/dbFunc/createNewUser');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
 const validateLogin= require('../db/dbFunc/validateLogin');
 const getUserTeams = require("../db/dbFunc/getUserTeams");
+const getCommishTeams = require("../db/dbFunc/getCommishTeams");
 
 module.exports = (knex) => {
 
@@ -18,9 +19,11 @@ module.exports = (knex) => {
 
   router.get('/user/:userID', (req, res) => {
     let userTeams = getUserTeams(req.params.userID, knex);
-    userTeams.then(function(userTeam) {
-      console.log(userTeam);
-      res.render('user/view', {userID: req.session.userID, username: req.session.username});
+    userTeams.then(function(ownedTeams) {
+      let commishTeams = getCommishTeams(req.params.userID, knex);
+      commishTeams.then(function(createdTeams) {
+        res.render('user/view', {userID: req.session.userID, username: req.session.username, ownedTeams: ownedTeams, createdTeams: createdTeams});
+      })
     })
   });
 
