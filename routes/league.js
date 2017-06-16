@@ -89,9 +89,7 @@ module.exports = (knex) => {
           leagueDraftInfo.then(function(draftInfo) {
             let leagueTeams = getLeagueTeams(req.params.leagueID, knex);
             leagueTeams.then(function(teams) {
-              console.log(teams);
-              console.log(req.session.userID);
-              res.render("football/league/view", {userID: req.session.userID, username: req.session.username, draftData: draftInfo, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData, takenTeams: teams});
+              res.render("football/league/view", {userID: req.session.userID, username: req.session.username, draftData: draftInfo, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData, takenTeams: teams.userIDs});
             })
           })
         })
@@ -101,7 +99,15 @@ module.exports = (knex) => {
 
   router.get("/football/league/:leagueID/claim/:teamID", (req, res) => {
     if (req.session.userID) {
-      res.render('football/league/claim', {userID: req.session.userID, username: req.session.username, leagueID: req.params.leagueID, teamID: req.params.teamID});
+      let leagueTeams = getLeagueTeams(req.params.leagueID, knex);
+      leagueTeams.then(function(teams) {
+        let takenTeams = teams.takenTeams
+        if (!takenTeams.includes(parseInt(req.params.teamID))) {
+          res.render('football/league/claim', {userID: req.session.userID, username: req.session.username, leagueID: req.params.leagueID, teamID: req.params.teamID});
+        } else {
+          res.redirect('/football/league/'+req.params.leagueID);
+        }
+      })
     } else {
       res.redirect('/login');
     }
@@ -109,15 +115,23 @@ module.exports = (knex) => {
 
   router.post("/football/league/:leagueID/claim/:teamID", (req, res) => {
     if (req.session.userID) {
-      let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
-      getLeagueInfo.then(function(leagueData){
-        if(leagueData.password === req.body.password) {
-          let addTeam = addTeamUser(req.params.teamID,  parseInt(req.session.userID), knex);
-          addTeam.then(function(){
-            res.redirect('/football/league/'+req.params.leagueID);
+      let leagueTeams = getLeagueTeams(req.params.leagueID, knex);
+      leagueTeams.then(function(teams) {
+        let takenTeams = teams.takenTeams
+        if (!takenTeams.includes(parseInt(req.params.teamID))) {
+          let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+          getLeagueInfo.then(function(leagueData){
+            if(leagueData.password === req.body.password) {
+              let addTeam = addTeamUser(req.params.teamID,  parseInt(req.session.userID), knex);
+              addTeam.then(function(){
+                res.redirect('/football/league/'+req.params.leagueID);
+              })
+            } else {
+              res.redirect('/football/league/${parseInt(req.params.leagueID)}/claim/${parseInt(req.params.teamID)}');
+            }
           })
         } else {
-          res.redirect('/football/league/${parseInt(req.params.leagueID)}/claim/${parseInt(req.params.teamID)}');
+          res.redirect('/football/league/'+req.params.leagueID);
         }
       })
     } else {
