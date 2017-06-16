@@ -19,6 +19,7 @@ const leagueRoutes = require('./routes/league');
 const draftRoutes = require('./routes/draft');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
+const userRoutes = require('./routes/user');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -64,6 +65,7 @@ app.all('/football/league/:leagueID/draft/create', draftRoutes(knex));
 app.get('/football/league/:leagueID/draft/:draftID', draftRoutes(knex));
 
 // account routes
+app.get('/user/:userID', userRoutes(knex));
 app.all('/register', registerRoutes(knex));
 app.all('/login', loginRoutes(knex));
 app.get('/logout', (req, res) => {

@@ -18,7 +18,7 @@ module.exports = (knex) => {
   }))
 
   router.get('/login', (req, res) => {
-    res.render('login', {userID: req.session.userID, username: req.session.username});
+    res.render('user/login', {userID: req.session.userID, username: req.session.username});
   });
 
 router.post('/login', (req, res) => {

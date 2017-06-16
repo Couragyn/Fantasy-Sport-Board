@@ -13,7 +13,6 @@ const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
 const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
 
-
 module.exports = (knex) => {
 
   router.use(cookieSession({
@@ -22,12 +21,12 @@ module.exports = (knex) => {
     }))
 
   router.get('/football/league', (req, res) => {
-    res.render('football/league/index', {username: req.session.username});
+    res.render('football/league/index', {userID: req.session.userID, username: req.session.username});
   });
 
   router.get('/football/league/create', (req, res) => {
     if (req.session.userID) {
-      res.render('football/league/create', {username: req.session.username});
+      res.render('football/league/create', {userID: req.session.userID, username: req.session.username});
     } else {
       res.redirect('/login');
     }

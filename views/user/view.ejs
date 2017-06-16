@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Register</title>
+  </head>
+
+  <body>
+    <% include ../partials/_nav %>
+    <div class="container center_div">
+      <h1><%= username %></h1>
+    </div>
+    <div class="container center_div">
+      <div class="col-md-6">
+        <h3>Owned Teams</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>League Name</th>
+              <th>Team Name</th>
+            </tr>
+            <% for (var i = 0; i < ownedTeams.length; i++) {%>
+              <tr>
+                <td><a class='btn btn-xs btn-default' href='/football/league/<%= ownedTeams[i].league_id %>'><%= ownedTeams[i].league_name %></a></td>
+                <td><%= ownedTeams[i].team_name %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-6">
+        <h3>Created Leagues</h3>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>League Name</th>
+              <th>Type</th>
+              <th>Scoring</th>
+              <th>Size</th>
+            </tr>
+            <% for (var i = 0; i < createdTeams.length; i++) {%>
+              <tr>
+                <td><a class='btn btn-xs btn-default' href='/football/league/<%= createdTeams[i].id %>'><%= createdTeams[i].name %></a></td>
+                <td><%= createdTeams[i].type %></td>
+                <td><%= createdTeams[i].scoring %></td>
+                <td><%= createdTeams[i].size %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
+
