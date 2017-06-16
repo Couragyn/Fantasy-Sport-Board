@@ -12,6 +12,7 @@ const cookieSession = require('cookie-session');
 const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
 const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
+const getUserTeams = require("../db/dbFunc/getUserTeams");
 
 
 module.exports = (knex) => {
@@ -79,6 +80,11 @@ module.exports = (knex) => {
   });
 
   router.get("/football/league/:leagueID", (req, res) => {
+    let userTeams = getUserTeams(1, knex);
+    userTeams.then(function(userTeam) {
+      console.log(userTeam);
+    })
+
     let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
     getLeagueInfo.then(function(leagueData){
       let getLeaguePositons = viewLeaguePositions(req.params.leagueID, knex);

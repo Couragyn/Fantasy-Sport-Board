@@ -64,6 +64,7 @@ app.all('/football/league/:leagueID/draft/create', draftRoutes(knex));
 app.get('/football/league/:leagueID/draft/:draftID', draftRoutes(knex));
 
 // account routes
+app.get('/user/:userID', userRoutes(knex));
 app.all('/register', registerRoutes(knex));
 app.all('/login', loginRoutes(knex));
 app.get('/logout', (req, res) => {
