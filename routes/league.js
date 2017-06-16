@@ -11,6 +11,7 @@ const getTeams = require('../db/dbFunc/getTeams');
 const cookieSession = require('cookie-session');
 const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
+const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
 
 
 module.exports = (knex) => {
@@ -86,8 +87,12 @@ module.exports = (knex) => {
         retrieveTeams.then(function(teamData) {
           let leagueDraftInfo = getLeagueDraftInfo(req.params.leagueID, knex);
           leagueDraftInfo.then(function(draftInfo) {
-            console.log(draftInfo);
-            res.render("football/league/view", {userID: req.session.userID, username: req.session.username, draftData: draftInfo, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData});
+            let leagueTeams = getLeagueTeams(req.params.leagueID, knex);
+            leagueTeams.then(function(teams) {
+              console.log(teams);
+              console.log(req.session.userID);
+              res.render("football/league/view", {userID: req.session.userID, username: req.session.username, draftData: draftInfo, leagueData: leagueData, leaguePositions: leaguePositions, teamData: teamData, takenTeams: teams});
+            })
           })
         })
       })
@@ -96,7 +101,7 @@ module.exports = (knex) => {
 
   router.get("/football/league/:leagueID/claim/:teamID", (req, res) => {
     if (req.session.userID) {
-      res.render('football/league/claim', {username: req.session.username, leagueID: req.params.leagueID, teamID: req.params.teamID});
+      res.render('football/league/claim', {userID: req.session.userID, username: req.session.username, leagueID: req.params.leagueID, teamID: req.params.teamID});
     } else {
       res.redirect('/login');
     }
@@ -107,7 +112,7 @@ module.exports = (knex) => {
       let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
       getLeagueInfo.then(function(leagueData){
         if(leagueData.password === req.body.password) {
-          let addTeam = addTeamUser(req.params.teamID, req.params.leagueID, knex);
+          let addTeam = addTeamUser(req.params.teamID,  parseInt(req.session.userID), knex);
           addTeam.then(function(){
             res.redirect('/football/league/'+req.params.leagueID);
           })

@@ -6,8 +6,6 @@ exports.up = function(knex, Promise) {
     table.integer('rounds');
     table.string('draft_type');
     table.string('pool');
-    table.string('start_type');
-    table.dateTime('date_time');
     table.string('status');
   });
 };

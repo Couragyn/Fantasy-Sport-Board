@@ -2,15 +2,19 @@
 <html lang="en">
   <head>
     <% include partials/_head %>
-    <title>Login</title>
+    <title>Register</title>
   </head>
 
   <body>
     <% include partials/_nav %>
 
-      <div class='container'>
-        <h1>Register</h1>
-        <form action='/register' method='POST'>
+    <div class='container'>
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-heading">
+          <div class="panel-title">Register</div>
+        </div>
+        <div class="panel-heading">
+          <form action='/register' method='POST'>
             <div class='form-group'>
                 <label for='username'>Userame</label>
                 <input type='text' name='username' class='form-control' id='username'>
@@ -26,7 +30,8 @@
             <div>
               <button type='submit' class='btn btn-default'>Submit</button>
             </div>
-        </form>
+          </form>
+        </div>
       </div>
   </body>
 </html>
