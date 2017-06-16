@@ -26,10 +26,16 @@
                 <td><%= (team.name) %></td>
                 <td><%= (team.draft_position) %></td>
                 <td>
+                <!-- if a team is claimed, shows the team name -->
                   <% if (team.user_id > 0) { %>
                     <%= team.username %>
                   <% } else { %>
-                    <a class='btn btn-xs btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a></p>
+                  <!-- Shows the claim button if signed in and haven't claimed a team already. Otherwise says Open -->
+                    <% if (!takenTeams.includes(userID) && userID) { %>
+                      <a class='btn btn-xs btn-primary btn-default' href="/football/league/<%= (leagueData.id) %>/claim/<%= team.id %>">Claim Team</a>
+                    <% } else { %>
+                      <strong>Open</strong>
+                    <% } %>
                   <% } %>
                 </td>
               </tr>

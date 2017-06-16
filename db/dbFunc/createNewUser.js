@@ -3,7 +3,7 @@ module.exports = function createNewUser(username, email, password, knex) {
     knex('users').insert({username: username, email: email, password: password})
       .returning('id')
       .then(function(userID) {
-        resolve(userID);
+        resolve(userID[0]);
       })
       .catch(function(err){
         console.log(err);

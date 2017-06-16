@@ -38,8 +38,6 @@ module.exports = (knex) => {
       rounds: req.body.rounds,
       draft_type: req.body.draftType,
       pool: req.body.pool,
-      start_type: req.body.start,
-      date_time: draftDate,
       status: 'Not Started'
     }
     let addDraft = createDraft(newDraft, knex);
