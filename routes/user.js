@@ -18,13 +18,17 @@ module.exports = (knex) => {
   }))
 
   router.get('/user/:userID', (req, res) => {
-    let userTeams = getUserTeams(req.params.userID, knex);
-    userTeams.then(function(ownedTeams) {
-      let commishTeams = getCommishTeams(req.params.userID, knex);
-      commishTeams.then(function(createdTeams) {
-        res.render('user/view', {userID: req.session.userID, username: req.session.username, ownedTeams: ownedTeams, createdTeams: createdTeams});
+    if (parseInt(req.session.userID) == req.params.userID) {
+      let userTeams = getUserTeams(req.params.userID, knex);
+      userTeams.then(function(ownedTeams) {
+        let commishTeams = getCommishTeams(req.params.userID, knex);
+        commishTeams.then(function(createdTeams) {
+          res.render('user/view', {userID: req.session.userID, username: req.session.username, ownedTeams: ownedTeams, createdTeams: createdTeams});
+        })
       })
-    })
+    } else {
+      res.redirect('/football');
+    }
   });
 
  return router;
