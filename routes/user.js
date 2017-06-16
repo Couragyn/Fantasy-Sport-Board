@@ -17,11 +17,11 @@ module.exports = (knex) => {
   }))
 
   router.get('/user/:userID', (req, res) => {
-    let userTeams = getUserTeams(1, knex);
+    let userTeams = getUserTeams(req.params.userID, knex);
     userTeams.then(function(userTeam) {
       console.log(userTeam);
+      res.render('user/view', {userID: req.session.userID, username: req.session.username});
     })
-
   });
 
  return router;

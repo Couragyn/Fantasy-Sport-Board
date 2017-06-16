@@ -16,7 +16,6 @@ module.exports = (knex) => {
   }))
 
   router.get('/register', (req, res) => {
-
     res.render('user/register', {userID: req.session.userID, username: req.session.username});
   });
 

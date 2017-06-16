@@ -19,6 +19,7 @@ const leagueRoutes = require('./routes/league');
 const draftRoutes = require('./routes/draft');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
+const userRoutes = require('./routes/user');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
