@@ -138,5 +138,32 @@ module.exports = (knex) => {
     }
   });
 
+  router.get('/football/league/:leagueID/edit', (req, res) => {
+    let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+    getLeagueInfo.then(function(leagueData){
+      if (leagueData.commish_id === req.session.userID) {
+        let getLeaguePositons = viewLeaguePositions(req.params.leagueID, knex);
+        getLeaguePositons.then(function(leaguePositions) {
+          console.log(leagueData);
+          console.log(leaguePositions);
+          res.render('football/league/edit', {userID: req.session.userID, username: req.session.username, data: leagueData, positions: leaguePositions});
+        })
+      } else {
+        res.redirect('/football/league/'+req.params.leagueID);
+      }
+    })
+  });
+
+  router.get('/football/league/:leagueID/edit', (req, res) => {
+    let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+    getLeagueInfo.then(function(leagueData){
+      if (leagueData.commish_id === req.session.userID) {
+        console.log(leagueData);
+      } else {
+        res.redirect('/football/league/'+req.params.leagueID);
+      }
+    })
+  });
+
   return router;
 }
