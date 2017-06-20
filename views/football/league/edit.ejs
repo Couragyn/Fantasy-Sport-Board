@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../../partials/_head %>
+    <title>Edit League</title>
+  </head>
+
+  <body>
+    <% include ../../partials/_nav %>
+    <div class='container'>
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-heading">
+          <div class="panel-title">Edit League</div>
+        </div>
+        <div class="panel-heading">
+          <form action='/football/league/<%= data.id %>/edit' method='post'>
+            <div class='form-group'>
+              <label for='name'>League Name:</label>
+              <input type='text' class='form-control' id='name' name='name' value='<%= data.name %>'>
+            </div>
+            <div class='form-group'>
+              <label for='password'>League Password:</label>
+              <input type='text' class='form-control' id='password' name='password' value='<%= data.password %>'>
+            </div>
+            <div class="form-group">
+              <label for="scoring">Scoring Type:</label>
+              <div class="radio">
+                <% if (data.scoring === 'Standard') { %>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="Standard" checked="checked">Standard</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="0.5 PPR">0.5 PPR</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="PPR">PPR</label>
+                <% } else if (data.scoring === '0.5 PPR') { %>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="Standard">Standard</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="0.5 PPR" checked="checked">0.5 PPR</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="PPR">PPR</label>
+                <% } else { %>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="Standard">Standard</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="0.5 PPR">0.5 PPR</label>
+                  <label class="radio-inline"><input type="radio" name="scoring" value="PPR" checked="checked">PPR</label>
+                <% } %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="type">League Type:</label>
+              <div class="radio">
+                <% if (data.type === 'Redraft') { %>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Redraft" checked="checked">Redraft</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Dynasty">Dynasty</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" id="keeperType" value="Keeper">Keeper</label>
+                <% } else if (data.scoring === 'Dynasty') { %>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Redraft">Redraft</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Dynasty" checked="checked">Dynasty</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" id="keeperType" value="Keeper">Keeper</label>
+                <% } else { %>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Redraft">Redraft</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" value="Dynasty">Dynasty</label>
+                <label class="radio-inline leagueType"><input type="radio" name="type" id="keeperType" value="Keeper" checked="checked">Keeper</label>
+                <% } %>
+              </div>
+            </div>
+            <div class="form-group hide" id="keeper">
+              <label for="keepers">Number of Keepers:
+                <select class="form-control" id="keepers" name="keepers">
+                  <% for (var i = 0; i <= 20; i++) { %>
+                    <option><%= i %></option>
+                  <% } %>
+                  </select>
+                </label>
+            </div>
+            <div class='form-group'>
+              <label for='position'>Roster Positions:</label>
+              <div class='container'>
+                <div class='row'>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>QB:
+                      <select class='form-control' id='qb' name='qb'>
+                        <% for (var i = 0; i <= 4; i++) { %>
+                          <% if (i === positions.QB) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>RB:
+                      <select class='form-control' id='rb' name='rb'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.RB) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>WR:
+                      <select class='form-control' id='wr' name='wr'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.WR) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>TE:
+                      <select class='form-control' id='te' name='te'>
+                        <% for (var i = 0; i <= 4; i++) { %>
+                          <% if (i === positions.TE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+
+                <div class='row'>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>RB/WR/TE:
+                      <select class='form-control' id='rb_wr_te' name='rb_wr_te'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.RB_WR_TE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>RB/TE:
+                      <select class='form-control' id='rb_te' name='rb_te'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.RB_TE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>WR/TE:
+                      <select class='form-control' id='wr_te' name='wr_te'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.WR_TE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>QB/WR/RB/TE:
+                      <select class='form-control' id='qb_wr_rb_te' name='qb_wr_rb_te'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.QB_WR_RB_TE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+
+                </div>
+                <div class='row'>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>RB/WR:
+                      <select class='form-control' id='rb_wr' name='rb_wr'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.RB_WR) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>K:
+                      <select class='form-control' id='k' name='k'>
+                        <% for (var i = 0; i <= 4; i++) { %>
+                          <% if (i === positions.K) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>DST:
+                      <select class='form-control' id='dst' name='dst'>
+                        <% for (var i = 0; i <= 4; i++) { %>
+                          <% if (i === positions.K) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="col-xs-1">
+                    <label class="text-inline">Bench:
+                      <select class="form-control" id="Bench" name="Bench">
+                        <% for (var i = 0; i <= 50; i++) { %>
+                          <% if (i === positions.Bench) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>IDP Flex:
+                      <select class='form-control' id='idp' name='idp'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.IDP) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>DL:
+                      <select class='form-control' id='dl' name='dl'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.DL) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>LB:
+                      <select class='form-control' id='lb' name='lb'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.LB) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>DB:
+                      <select class='form-control' id='db' name='db'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.DB) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>DE:
+                      <select class='form-control' id='de' name='de'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.DE) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>DT:
+                      <select class='form-control' id='dt' name='dt'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.DT) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>CB:
+                      <select class='form-control' id='cb' name='cb'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.CB) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                  <div class='col-xs-1'>
+                    <label class='text-inline'>S:
+                      <select class='form-control' id='s' name='s'>
+                        <% for (var i = 0; i <= 6; i++) { %>
+                          <% if (i === positions.S) { %>
+                            <option selected='selected'><%= i %></option>
+                          <% } else { %>
+                            <option><%= i %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type='submit' class='btn btn-default'>Submit</button>
+              <a href="/football/league/<%= data.id %>" class="btn btn-danger" role="button">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

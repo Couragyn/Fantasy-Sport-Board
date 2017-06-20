@@ -103,8 +103,14 @@
               <td>Name</td>
               <td><%= (leagueData.name) %></td>
             </tr>
+            <% if (leagueData.commish_id == userID) { %>
+              <tr>
+                <td>Password</td>
+                <td><%= (leagueData.password) %></td>
+              </tr>
+            <% } %>
             <tr>
-              <td>Size</td>
+              <td>Teams</td>
               <td><%= (leagueData.size) %></td>
             </tr>
             <tr>
