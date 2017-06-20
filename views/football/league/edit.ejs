@@ -13,7 +13,7 @@
           <div class="panel-title">Edit League</div>
         </div>
         <div class="panel-heading">
-          <form action='/football/league/create' method='post'>
+          <form action='/football/league/<%= data.id %>/edit' method='post'>
             <div class='form-group'>
               <label for='name'>League Name:</label>
               <input type='text' class='form-control' id='name' name='name' value='<%= data.name %>'>
