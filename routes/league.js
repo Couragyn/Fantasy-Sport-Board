@@ -13,6 +13,7 @@ const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
 const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
 const updateLeague = require("../db/dbFunc/updateLeague");
+const removeOwner = require("../db/dbFunc/removeOwner");
 
 module.exports = (knex) => {
 
@@ -136,6 +137,20 @@ module.exports = (knex) => {
     } else {
       res.redirect('/login');
     }
+  });
+
+  router.post("/football/league/:leagueID/remove/:teamID", (req, res) => {
+    let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+    getLeagueInfo.then(function(leagueData){
+      if (leagueData.commish_id === req.session.userID) {
+        let removeUser = removeOwner(req.params.teamID, knex);
+        removeUser.then(function(leagueData){
+          res.redirect('/football/league/'+req.params.leagueID);
+        })
+      } else {
+        res.redirect('/football/league/'+req.params.leagueID);
+      }
+    })
   });
 
   router.get('/football/league/:leagueID/edit', (req, res) => {

@@ -59,6 +59,7 @@ app.get('/football/league/view', leagueRoutes(knex));
 app.get('/football/league/:leagueID', leagueRoutes(knex));
 app.all('/football/league/:leagueID/edit', leagueRoutes(knex));
 app.all('/football/league/:leagueID/claim/:teamID', leagueRoutes(knex));
+app.post('/football/league/:leagueID/remove/:teamID', leagueRoutes(knex));
 
 
 // draft routes
