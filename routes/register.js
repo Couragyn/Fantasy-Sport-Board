@@ -24,10 +24,10 @@ module.exports = (knex) => {
     let username = req.body['username'];
     let email = req.body['email'];
     let password = bcrypt.hashSync(req.body['password'], 10);
-
+    
     const validate = validateUniqueUsername(username, knex);
     validate.then(function(validateResults){
-      if (!(username && email && password) || !validateResults){
+      if (!(username && email && password && req.body['confirmPassword'] === req.body['password']) || !validateResults){
         res.status(404);
         res.redirect('/register');
       } else {
