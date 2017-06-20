@@ -20,6 +20,9 @@
               <th>Team Name</th>
               <th>Draft Position</th>
               <th>Owner</th>
+              <% if (leagueData.commish_id == userID) { %>
+                <th>Remove Owner</th>
+              <% } %>
             </tr>
             <% teamData.forEach(function(team) { %>
               <tr>
@@ -38,6 +41,13 @@
                     <% } %>
                   <% } %>
                 </td>
+                <% if (team.user_id > 0 && leagueData.commish_id == userID) { %>
+                  <td>
+                    <form action="/football/league/<%= (leagueData.id) %>/remove/<%= team.id %>" method="post">
+                      <button type='submit' class='btn btn-xs btn-primary btn-danger'><span class="glyphicon glyphicon-remove"></span></button>
+                    </form>
+                  </td>
+                <% } %>
               </tr>
             <% }); %>
           </tbody>
