@@ -13,7 +13,6 @@ const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
 const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
 const updateLeague = require("../db/dbFunc/updateLeague");
-const updateLeagueTeams = require("../db/dbFunc/updateLeagueTeams");
 
 module.exports = (knex) => {
 
