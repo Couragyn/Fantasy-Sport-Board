@@ -17,4 +17,20 @@ $(document).ready(function() {
       $('#date').addClass("hide");
     }
   });
+
+  $("#confirmPassword").keyup(validate);
+
 });
+
+function validate() {
+  var password = $("#password").val();
+  var confirmPassword = $("#confirmPassword").val();
+ 
+    if(password == confirmPassword) {
+       $("#validate-status").text("Passwords match!");        
+    }
+    else {
+        $("#validate-status").text("Passwords do not match");  
+    }
+    
+}
