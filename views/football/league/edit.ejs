@@ -22,19 +22,6 @@
               <label for='password'>League Password:</label>
               <input type='text' class='form-control' id='password' name='password' value='<%= data.password %>'>
             </div>
-            <div class='form-group'>
-              <label for='size'>Number of Teams:
-                <select class='form-control' id='size' name='size'>
-                  <% for (var i = 4; i <= 32; i++) { %>
-                    <% if (i === data.size) { %>
-                      <option selected='selected'><%= i %></option>
-                    <% } else { %>
-                      <option><%= i %></option>
-                    <% } %>
-                  <% } %>
-                </select>
-              </label>
-            </div>
             <div class="form-group">
               <label for="scoring">Scoring Type:</label>
               <div class="radio">

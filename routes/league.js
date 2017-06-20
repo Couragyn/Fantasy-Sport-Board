@@ -12,6 +12,8 @@ const cookieSession = require('cookie-session');
 const addTeamUser = require('../db/dbFunc/addTeamUser');
 const getLeagueDraftInfo = require("../db/dbFunc/getLeagueDraftInfo");
 const getLeagueTeams = require("../db/dbFunc/getLeagueTeams");
+const updateLeague = require("../db/dbFunc/updateLeague");
+const updateLeagueTeams = require("../db/dbFunc/updateLeagueTeams");
 
 module.exports = (knex) => {
 
@@ -160,10 +162,9 @@ module.exports = (knex) => {
         // Gets the positions used for his league
         let leaguePositions = positionBuilder(req.body);
         // sets the form data to a JSON object
-        const newLeague = {
+        const updatedLeague = {
           name: req.body.name,
           password: req.body.password,
-          size: req.body.size,
           scoring: req.body.scoring,
           type: req.body.type,
           keepers: req.body.keepers,
@@ -187,12 +188,12 @@ module.exports = (knex) => {
           S: req.body.s,
           IDP: req.body.idp,
           Bench: req.body.Bench,
-          positions: leaguePositions,
+          positions: leaguePositions
         }
-        if (req.body.size != leagueData.size) {
-          console.log('Nah');
-        }
-
+        let updateInfo = updateLeague(req.params.leagueID, updatedLeague, knex);
+        updateInfo.then(function(leagueData){
+          res.redirect('/football/league/'+req.params.leagueID);
+        })
       } else {
         res.redirect('/football/league/'+req.params.leagueID);
       }

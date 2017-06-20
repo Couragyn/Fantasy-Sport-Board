@@ -7,7 +7,7 @@ module.exports = function createDraft(draft, knex) {
         resolve(draftID);
       })
       .catch(function(err){
-        console.log(err);
+        reject(err);
       })
   })
 }
