@@ -14,9 +14,9 @@ module.exports = (knex) => {
     name: 'session',
     secret: 'urlshy5hdyjtid'
   }))
-
+  
   router.get('/register', (req, res) => {
-    res.render('user/register', {userID: req.session.userID, username: req.session.username});
+    res.render('user/register', {userID: req.session.userID, username: req.session.username, uniqueUsername: true});
   });
 
   router.post('/register', (req, res) => {
@@ -29,7 +29,7 @@ module.exports = (knex) => {
     validate.then(function(validateResults){
       if (!(username && email && password && req.body['confirmPassword'] === req.body['password']) || !validateResults){
         res.status(404);
-        res.redirect('/register');
+        res.render('user/register', {userID: req.session.userID, username: req.session.username, uniqueUsername: validateResults});
       } else {
         createNewUser(username, email, password, knex).then(function(userID) {
           req.session.userID = userID;
