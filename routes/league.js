@@ -69,10 +69,14 @@ module.exports = (knex) => {
         positions: leaguePositions,
         commish_id: parseInt(req.session.userID)
       }
-      let leagueID = addLeague(newLeague, knex);
-      leagueID.then(function(leagueID) {
-        res.redirect('/football/league/'+leagueID);
-      });
+      if (req.body.name && req.body.password && req.body.scoring && req.body.type){
+        let leagueID = addLeague(newLeague, knex);
+        leagueID.then(function(leagueID) {
+          res.redirect('/football/league/'+leagueID);
+      }); 
+      } else {
+        res.redirect('/football/league/create');
+      }      
     } else {
       res.redirect('/login');
     }
@@ -204,10 +208,14 @@ module.exports = (knex) => {
           Bench: req.body.Bench,
           positions: leaguePositions
         }
-        let updateInfo = updateLeague(req.params.leagueID, updatedLeague, knex);
-        updateInfo.then(function(leagueData){
-          res.redirect('/football/league/'+req.params.leagueID);
-        })
+        if (req.body.name && req.body.password){
+          let updateInfo = updateLeague(req.params.leagueID, updatedLeague, knex);
+          updateInfo.then(function(leagueData){
+            res.redirect('/football/league/'+req.params.leagueID);
+          })
+        } else {
+          res.redirect('/football/league/'+req.params.leagueID+'/edit');
+        }
       } else {
         res.redirect('/football/league/'+req.params.leagueID);
       }
