@@ -10,9 +10,26 @@
     <div class='container'>
       <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel-heading">
+          <div class='user-info'>
+            <p>Current Username: <%= username %></p>
+            <br>
+            <p>Current Email: <%= email %></p>
+            <br>
+          </div>
+            <form action='/account/username' method='POST'>
+              <div class='form-group'>
+                <div class="panel-title">Change Your Username</div>
+                <br>
+                <label for='username'>New Username</label>
+                <input type='text' name='username' class='form-control' id='username'>
+              <div>    
+                <button type='submit' class='btn btn-default'>Submit</button>
+              </div>
+            </form>
             <form action='/account/email' method='POST'>
               <div class='form-group'>
                 <div class="panel-title">Change Your Email</div>
+                <br>
                 <label for='email'>New Email</label>
                 <input type='email' name='email' class='form-control' id='email'>
               <div>    
@@ -22,6 +39,7 @@
             <form action='/account/password' method='POST'>
               <div class='form-group'>
                 <div class="panel-title">Change Your Password</div>
+                <br>
                 <label for='oldPassword'>Old Password</label>
                 <input type='password' name='oldPassword' class='form-control' id='oldPassword'>
               <div>

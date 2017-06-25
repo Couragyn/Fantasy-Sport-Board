@@ -7,7 +7,9 @@ const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const updateEmail = require('../db/dbFunc/updateEmail');
 const updatePassword = require('../db/dbFunc/updatePassword');
+const updateUsername = require('../db/dbFunc/updateUsername');
 const validateLogin = require('../db/dbFunc/validateLogin');
+const getEmail = require('../db/dbFunc/getEmail');
 
 module.exports = (knex) => {
   
@@ -17,24 +19,29 @@ module.exports = (knex) => {
   })) 
 
   router.get('/account', (req, res) => {
-    res.render('user/account', {userID: req.session.userID, username: req.session.username});
+    const email = getEmail(req.session.userID, knex);
+    email.then(function(email){
+      res.render('user/account', {userID: req.session.userID, username: req.session.username, email: email});
+    })
   });
 
   router.post('/account/email', (req, res) => {
-    let email = req.body['email'];
-    let username = req.session.username;
-    updateEmail(username, email, knex);
+    updateEmail(req.session.userID, req.body['email'], knex);
+    res.redirect('/');
+  });
+
+  router.post('/account/username', (req, res) => {
+    let username = req.body['username'];
+    updateUsername(req.session.userID, username, knex);
+    req.session.username = username;
     res.redirect('/');
   });
 
   router.post('/account/password', (req, res) => {
-    let oldPassword = req.body['oldPassword'];
-    let newPassword = bcrypt.hashSync(req.body['password'], 10);
-    let username = req.session.username;
-    const login = validateLogin(username, knex);
+    const login = validateLogin(req.session.username, knex);
     login.then(function(login){
-      if (bcrypt.compareSync(oldPassword, login)) {
-        updatePassword(username, newPassword, knex);
+      if (bcrypt.compareSync(req.body['oldPassword'], login)) {
+        updatePassword(req.session.userID, bcrypt.hashSync(req.body['password'], 10), knex);
         res.redirect('/');  
       } else {
        res.redirect('/account');
@@ -43,3 +50,5 @@ module.exports = (knex) => {
   })
  return router;
 }
+
+
