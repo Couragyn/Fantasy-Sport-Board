@@ -1,7 +1,7 @@
-module.exports = function updatePassword(username, password, knex) {
+module.exports = function updatePassword(userID, password, knex) {
   return new Promise((resolve, reject) => {
     knex('users')
-      .where('username', '=', username)
+      .where('id', '=', userID)
       .update({
         password: password
        })

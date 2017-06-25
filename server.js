@@ -72,6 +72,7 @@ app.get('/user/:userID', userRoutes(knex));
 app.get('/account', accountRoutes(knex));
 app.post('/account/email', accountRoutes(knex));
 app.post('/account/password', accountRoutes(knex));
+app.post('/account/username', accountRoutes(knex));
 app.all('/register', registerRoutes(knex));
 app.all('/login', loginRoutes(knex));
 app.get('/logout', (req, res) => {
