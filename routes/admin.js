@@ -5,9 +5,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
-const validateLogin= require('../db/dbFunc/validateLogin');
-const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
-const getUserID = require('../db/dbFunc/getUserID');
+const validateLogin= require('../db/dbFunc/validateAdmin');
+const validateUniqueUsername = require('../db/dbFunc/validateUniqueAdmin');
+const getUserID = require('../db/dbFunc/getAdminID');
 
 
 module.exports = (knex) => {
@@ -17,31 +17,34 @@ module.exports = (knex) => {
     secret: 'urlshy5hdyjtid'
   }))
 
-  router.get('/login', (req, res) => {
-    res.render('user/login', {userID: req.session.userID, username: req.session.username});
+  router.get('/admin', (req, res) => {
+    res.redirect('admin/login');
   });
 
-  router.post('/login', (req, res) => {
+  router.get('/admin/login', (req, res) => {
+    res.render('admin/login', {userID: req.session.userID, username: req.session.username});
+  });
+
+  router.post('/admin/login', (req, res) => {
 
     let username = req.body['username'];
     let password = req.body['password'];
-
     const validate = validateUniqueUsername(username, knex);
     validate.then(function(validateResults){
       if (validateResults){
-        res.redirect('/login');
+        res.redirect('admin/login');
       } else {
         const login = validateLogin(username, knex);
         login.then(function(login){
           if (bcrypt.compareSync(password, login)) {
             const userInfo = getUserID(username, knex);
             userInfo.then(function(userID) {
-              req.session.userID = userID;
-              req.session.username = username;
-              res.redirect('/football');
+              req.session.adminID = userID;
+              req.session.adminName = username;
+              res.redirect('/admin');
             })
           } else {
-            res.redirect('/login');
+            res.redirect('admin/login');
           }
         });
       }
