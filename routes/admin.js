@@ -8,6 +8,7 @@ const cookieSession = require('cookie-session');
 const validateLogin= require('../db/dbFunc/validateAdmin');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueAdmin');
 const getUserID = require('../db/dbFunc/getAdminID');
+const getPlayers = require('../db/dbFunc/getPlayers');
 
 
 module.exports = (knex) => {
@@ -18,11 +19,20 @@ module.exports = (knex) => {
   }))
 
   router.get('/admin', (req, res) => {
-    res.redirect('admin/login');
+    const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
+    const queryPlayers = getPlayers(positions, knex);
+    queryPlayers.then(function(players){
+      res.render('admin/players', {players: players, positions: positions});
+    });
+  });
+
+  router.post('/admin/players', (req, res) => {
+    console.log(req.body);
+    res.redirect('/admin');
   });
 
   router.get('/admin/login', (req, res) => {
-    res.render('admin/login', {userID: req.session.userID, username: req.session.username});
+    res.render('admin/login');
   });
 
   router.post('/admin/login', (req, res) => {

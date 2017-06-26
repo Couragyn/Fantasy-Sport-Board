@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Admin Login</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+
+    var positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
+    $(function() {
+      for (i = 0; i < positions.length; i++) {
+        $( "#sortable-"+positions[i] ).sortable({
+          placeholder: "ui-state-highlight",
+          cursor: 'crosshair',
+          update: function(event, ui) {
+            var thisPosit = $(this).attr("id").split('-')[1];
+            var Order = $(this).sortable('toArray').toString();
+            $('#order-'+thisPosit).val(Order);
+          }
+        });
+        $( "#sortable-"+positions[i] ).disableSelection();
+      }
+      $( "#tabs" ).tabs();
+    });
+  </script>
+
+  </head>
+
+  <body>
+    <div class='container'>
+    <%= players[303].name %>
+    <%= players.length %>
+      <form action="/admin/players" method="post">
+        <div id="tabs">
+          <ul>
+            <% for (var i = 0; i < positions.length; i++) { %>
+              <li><a href="#tabs-<%= positions[i] %>"><%= positions[i] %></a></li>
+            <% } %>
+          </ul>
+
+        <% var currPosition = players[0].position %>
+        <% for (var i = 0; i < players.length; i++) { %>
+           <div id="tabs-<%= currPosition %>">
+            <table class="table">
+              <tbody id="sortable-<%= currPosition %>">
+                <% while (players[i].position === currPosition && i+1 < players.length) { %>
+                  <tr id='<%= players[i].id %>'>
+                    <td><%= players[i].position_adp %></td>
+                    <td><%= players[i].name %></td>
+                    <td><%= players[i].team %></td>
+                  </tr>
+                  <% if (players[i+1].position === currPosition && i+1 < players.length) { %>
+                    <% i++ %>
+                  <% } else { %>
+                    <% break %>
+                  <% } %>
+                <% } %>
+                <% if (i+1 === players.length) { %>
+                  <tr id='<%= players[players.length - 1].id %>'>
+                    <td><%= players[players.length - 1].position_adp %></td>
+                    <td><%= players[players.length - 1].name %></td>
+                    <td><%= players[players.length - 1].team %></td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          <% if (i+1 < players.length) { %>
+            <% currPosition = players[i+1].position %>
+          <% } %>
+        <% } %>
+      </div>
+
+      <% for (var i = 0; i < positions.length; i++) { %>
+        <input name="<%= positions[i] %>" id="order-<%= positions[i] %>" type="hidden" />
+      <% } %>
+
+      <div style="clear:both;"></div>
+      <button type='submit' class='btn btn-default'>Submit</button>
+      </form>​
+
+    </div>
+  </body>
+</html>
