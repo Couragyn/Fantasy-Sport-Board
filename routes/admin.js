@@ -10,6 +10,7 @@ const validateUniqueUsername = require('../db/dbFunc/validateUniqueAdmin');
 const getUserID = require('../db/dbFunc/getAdminID');
 const getPlayers = require('../db/dbFunc/getPlayers');
 const updatePlayers = require('../db/dbFunc/updatePlayers');
+const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
 
 module.exports = (knex) => {
 
@@ -19,7 +20,6 @@ module.exports = (knex) => {
   }))
 
   router.get('/admin', (req, res) => {
-    const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
     const queryPlayers = getPlayers(positions, knex);
     queryPlayers.then(function(players){
       res.render('admin/players', {players: players, positions: positions});
@@ -27,14 +27,17 @@ module.exports = (knex) => {
   });
 
   router.post('/admin/players', (req, res) => {
-    if (req.body.QB) {
-      let qbArray = req.body.QB.split(',');
-      const changePlayers = updatePlayers(qbArray, knex);
-      changePlayers;
-      res.redirect('/admin');
-    } else {
-      console.log('na');
+    let updateArray = [];
+    let updateObj = {};
+    for (let i = 0; i < positions.length; i++) {
+      let currPosition = positions[i]
+      if (eval(`req.body.${currPosition}`)) {
+        let updateArray = eval(`req.body.${currPosition}`).split(',');
+        const updateObj = updatePlayers(updateArray, knex);
+        updateObj;
+      }
     }
+    res.redirect('/admin');
   });
 
   router.get('/admin/login', (req, res) => {
