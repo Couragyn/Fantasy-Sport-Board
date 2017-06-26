@@ -1,5 +1,5 @@
 // Updates the league info
-module.exports = function createLeague(leagueID, league, knex) {
+module.exports = function updateLeague(leagueID, league, knex) {
   return new Promise((resolve, reject) => {
     knex('league')
       .where('id', '=', leagueID)

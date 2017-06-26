@@ -9,7 +9,7 @@ const validateLogin= require('../db/dbFunc/validateAdmin');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueAdmin');
 const getUserID = require('../db/dbFunc/getAdminID');
 const getPlayers = require('../db/dbFunc/getPlayers');
-
+const updatePlayers = require('../db/dbFunc/updatePlayers');
 
 module.exports = (knex) => {
 
@@ -27,8 +27,14 @@ module.exports = (knex) => {
   });
 
   router.post('/admin/players', (req, res) => {
-    console.log(req.body);
-    res.redirect('/admin');
+    if (req.body.QB) {
+      let qbArray = req.body.QB.split(',');
+      const changePlayers = updatePlayers(qbArray, knex);
+      changePlayers;
+      res.redirect('/admin');
+    } else {
+      console.log('na');
+    }
   });
 
   router.get('/admin/login', (req, res) => {
