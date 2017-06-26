@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- functionality for tab and drag. to be moved -->
   <script>
 
     var positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
@@ -30,33 +31,37 @@
 
   <body>
     <div class='container'>
-    <%= players[303].name %>
-    <%= players.length %>
+    <!-- When posted, updates player ranks -->
       <form action="/admin/players" method="post">
+      <!-- makes tabs for all the positions -->
         <div id="tabs">
           <ul>
             <% for (var i = 0; i < positions.length; i++) { %>
               <li><a href="#tabs-<%= positions[i] %>"><%= positions[i] %></a></li>
             <% } %>
           </ul>
-
+        <!-- sets first posion being looped through -->
         <% var currPosition = players[0].position %>
         <% for (var i = 0; i < players.length; i++) { %>
+          <!-- creates tab and table for position -->
            <div id="tabs-<%= currPosition %>">
             <table class="table">
               <tbody id="sortable-<%= currPosition %>">
+                <!-- loops through all the players at that position and created row if position same and not last entry -->
                 <% while (players[i].position === currPosition && i+1 < players.length) { %>
                   <tr id='<%= players[i].id %>'>
                     <td><%= players[i].position_adp %></td>
                     <td><%= players[i].name %></td>
                     <td><%= players[i].team %></td>
                   </tr>
+                  <!-- as for loop incriments, it does not incrament for last run through of while loop -->
                   <% if (players[i+1].position === currPosition && i+1 < players.length) { %>
                     <% i++ %>
                   <% } else { %>
                     <% break %>
                   <% } %>
                 <% } %>
+                <!-- very last player not populating, added here. Will dry out code later -->
                 <% if (i+1 === players.length) { %>
                   <tr id='<%= players[players.length - 1].id %>'>
                     <td><%= players[players.length - 1].position_adp %></td>
@@ -67,12 +72,14 @@
               </tbody>
             </table>
           </div>
+          <!-- changes to next position -->
           <% if (i+1 < players.length) { %>
             <% currPosition = players[i+1].position %>
           <% } %>
         <% } %>
       </div>
 
+      <!-- invisible input to save new order of position -->
       <% for (var i = 0; i < positions.length; i++) { %>
         <input name="<%= positions[i] %>" id="order-<%= positions[i] %>" type="hidden" />
       <% } %>
