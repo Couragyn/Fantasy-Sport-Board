@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <% include ../partials/_head %>
-    <title>Admin Login</title>
+    <title>Players</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="/scripts/admin.js"></script>
@@ -17,68 +17,29 @@
           <div class="panel-title">Add Player</div>
         </div>
         <div class="panel-heading">
-          <form action='/players/new' method='POST'>
+          <form action='/admin/players/new' method='POST'>
             <div class='form-group col-xs-12'>
               <label for='username'>Name</label>
-              <input type='text' name='username' class='form-control' id='username'>
+              <input type='text' name='name' class='form-control' id='name'>
             </div>
             <div class='form-group'>
-              <label class='text-inline col-xs-4'>Position:
+              <label class='text-inline col-xs-4'>Position
                 <select class='form-control' id='position' name='position'>
-                  <option>QB</option>
-                  <option>RB</option>
-                  <option>WR</option>
-                  <option>TE</option>
-                  <option>K</option>
-                  <option>DST</option>
-                  <option>DL</option>
-                  <option>LB</option>
-                  <option>DB</option>
-                  <option>DE</option>
-                  <option>DT</option>
-                  <option>CB</option>
-                  <option>S</option>
+                  <% for (var i = 0; i < positions.length; i++) { %>
+                    <option><%= positions[i] %></option>
+                  <% } %>
                 </select>
               </label>
-              <label class='text-inline col-xs-4'>Team:
-                <select class='form-control col-sm-4' id='position' name='position'>
-                  <option>ARI</option>
-                  <option>ATL</option>
-                  <option>BAL</option>
-                  <option>BUF</option>
-                  <option>CAR</option>
-                  <option>CHI</option>
-                  <option>CIN</option>
-                  <option>CLE</option>
-                  <option>DAL</option>
-                  <option>DEN</option>
-                  <option>DET</option>
-                  <option>GB</option>
-                  <option>HOU</option>
-                  <option>IND</option>
-                  <option>JAC</option>
-                  <option>KC</option>
-                  <option>LAC</option>
-                  <option>LAR</option>
-                  <option>MIA</option>
-                  <option>MIN</option>
-                  <option>NYG</option>
-                  <option>NYJ</option>
-                  <option>NE</option>
-                  <option>NO</option>
-                  <option>OAK</option>
-                  <option>PHI</option>
-                  <option>PIT</option>
-                  <option>SF</option>
-                  <option>SEA</option>
-                  <option>TB</option>
-                  <option>TEN</option>
-                  <option>WSH</option>
+              <label class='text-inline col-xs-4'>Team
+                <select class='form-control col-sm-4' id='team' name='team'>
+                  <% for (var i = 0; i < teams.length; i++) { %>
+                    <option><%= teams[i] %></option>
+                  <% } %>
                 </select>
               </label>
               <div>
-              <label class='text-inline col-xs-4'>Rookie:</label>
-                <input class=' col-xs-1' type="checkbox" value="Rookie">
+              <label class='text-inline col-xs-4'>Rookie</label>
+                <input class='col-xs-1' type="checkbox" value="Rookie" name="rookie">
               </div>
             </div>
             <div class='form-group col-xs-12'>
@@ -131,8 +92,14 @@
                 <!-- very last player not populating, added here. Will dry out code later -->
                 <% if (i+1 === players.length) { %>
                   <tr>
-                    <td><a href='/admin/players/<%= players[players.length - 1].id %>'><%= players[players.length - 1].name %></td>
+                    <td><%= players[players.length - 1].name %></td>
                     <td><%= players[players.length - 1].team %></td>
+                    <% if (players[players.length - 1].rookie) { %>
+                      <td><span class="glyphicon glyphicon-ok"></td>
+                    <% } else { %>
+                      <td></td>
+                    <% } %>
+                    <td><a href='/admin/players/<%= players[players.length - 1].id %>'><span class="glyphicon glyphicon-pencil"></span></a></td>
                   </tr>
                 <% } %>
               </tbody>

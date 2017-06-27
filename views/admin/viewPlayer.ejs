@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Edit Player</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="/scripts/admin.js"></script>
+
+  </head>
+
+  <body>
+    <% include ../partials/_adminNav %>
+    <div class='container'>
+      <div>
+        <div class="panel-heading col-xs-12">
+          <div class="panel-title">Edit Player</div>
+        </div>
+        <div class="panel-heading">
+          <form action='/admin/players/new' method='POST'>
+            <div class='form-group col-xs-12'>
+              <label for='username'>Name</label>
+              <input type='text' name='name' class='form-control' id='name' value='<%= player.name %>'>
+            </div>
+            <div class='form-group'>
+              <label class='text-inline col-xs-4'>Position
+                <select class='form-control' id='position' name='position'>
+                  <% for (var i = 0; i < positions.length; i++) { %>
+                    <% if (player.position === positions[i]) { %>
+                      <option selected='selected'><%= positions[i] %></option>
+                    <% } else { %>
+                      <option><%= positions[i] %></option>
+                    <% } %>
+                  <% } %>
+                </select>
+              </label>
+              <label class='text-inline col-xs-4'>Team
+                <select class='form-control col-sm-4' id='team' name='team'>
+                  <% for (var i = 0; i < teams.length; i++) { %>
+                    <% if (player.team === teams[i]) { %>
+                      <option selected='selected'><%= teams[i] %></option>
+                    <% } else { %>
+                      <option><%= teams[i] %></option>
+                    <% } %>
+                  <% } %>
+                </select>
+              </label>
+              <div>
+              <label class='text-inline col-xs-4'>Rookie</label>
+                <% if (player.rookie) { %>
+                  <input class='col-xs-1' type="checkbox" value="Rookie" name="rookie" checked="checked">
+                <% } else { %>
+                  <input class='col-xs-1' type="checkbox" value="Rookie" name="rookie">
+                <% } %>
+              </div>
+            </div>
+            <div class='form-group col-xs-12'>
+              <button type='submit' class='btn btn-default'>Submit</button>
+              <a href="/admin/players" class="btn btn-default" role="button">Cancel</a>
+              <a href="/admin/players" class="btn btn-danger pull-right" role="button">Delete</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

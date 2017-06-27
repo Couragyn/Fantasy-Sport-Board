@@ -82,6 +82,8 @@ app.get('/admin', adminRoutes(knex));
 app.all('/admin/login', adminRoutes(knex));
 app.all('/admin/playeradp', adminRoutes(knex));
 app.get('/admin/players', adminRoutes(knex));
+app.post('/admin/players/new', adminRoutes(knex));
+app.all('/admin/players/:playerID', adminRoutes(knex));
 app.get('/admin/logout', (req, res) => {
  req.session.adminID = null;
  req.session.adminName = null;

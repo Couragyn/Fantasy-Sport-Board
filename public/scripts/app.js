@@ -34,3 +34,7 @@ function validate() {
     }
 
 }
+
+function confirm() {
+  confirm("Are you sure?");
+}

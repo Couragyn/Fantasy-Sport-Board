@@ -10,7 +10,12 @@ const validateUniqueUsername = require('../db/dbFunc/validateUniqueAdmin');
 const getUserID = require('../db/dbFunc/getAdminID');
 const getPlayers = require('../db/dbFunc/getPlayers');
 const updatePlayers = require('../db/dbFunc/updatePlayers');
+const createPlayer = require('../db/dbFunc/createPlayer');
+const getPlayerInfo = require('../db/dbFunc/getPlayerInfo');
+
 const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
+const teams = ['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN', 'GB', 'CB', 'HOU', 'IND', 'JAC', 'KC', 'LAC', 'LAR', 'MIA', 'MIN', 'NYG', 'NYJ', 'NE', 'NO', 'OAK', 'PHI', 'PIT', 'SF', 'SEA', 'TB', 'TEN', 'WSH'];
+
 
 module.exports = (knex) => {
 
@@ -44,7 +49,7 @@ module.exports = (knex) => {
         if (!validateResults) {
           const queryPlayers = getPlayers(positions, knex);
           queryPlayers.then(function(players){
-            res.render('admin/playerADP', {players: players, positions: positions});
+            res.render('admin/playerADP', {players: players, positions: positions, teams: teams});
           });
         } else {
           res.redirect('/admin/login');
@@ -87,7 +92,43 @@ module.exports = (knex) => {
         if (!validateResults) {
           const queryPlayers = getPlayers(positions, knex);
           queryPlayers.then(function(players){
-            res.render('admin/players', {players: players, positions: positions});
+            res.render('admin/players', {players: players, positions: positions, teams: teams});
+          });
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
+    }
+  });
+
+  router.post('/admin/players/new', (req, res) => {
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          const addPlayer = createPlayer(req.body, knex);
+          addPlayer;
+          res.redirect('/admin/players');
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
+    }
+  });
+
+  router.get('/admin/players/:playerID', (req, res) => {
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          const playerInfo = getPlayerInfo(req.params.playerID, knex);
+          playerInfo.then(function(player){
+            console.log(player);
+            res.render('admin/viewPlayer', {player: player, positions: positions, teams: teams});
           });
         } else {
           res.redirect('/admin/login');
