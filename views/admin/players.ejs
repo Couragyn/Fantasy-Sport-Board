@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Admin Login</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="/scripts/admin.js"></script>
+
+  </head>
+
+  <body>
+    <% include ../partials/_adminNav %>
+    <div class='container'>
+      <div>
+        <div class="panel-heading col-xs-12">
+          <div class="panel-title">Add Player</div>
+        </div>
+        <div class="panel-heading">
+          <form action='/players/new' method='POST'>
+            <div class='form-group col-xs-12'>
+              <label for='username'>Name</label>
+              <input type='text' name='username' class='form-control' id='username'>
+            </div>
+            <div class='form-group'>
+              <label class='text-inline col-xs-4'>Position:
+                <select class='form-control' id='position' name='position'>
+                  <option>QB</option>
+                  <option>RB</option>
+                  <option>WR</option>
+                  <option>TE</option>
+                  <option>K</option>
+                  <option>DST</option>
+                  <option>DL</option>
+                  <option>LB</option>
+                  <option>DB</option>
+                  <option>DE</option>
+                  <option>DT</option>
+                  <option>CB</option>
+                  <option>S</option>
+                </select>
+              </label>
+              <label class='text-inline col-xs-4'>Team:
+                <select class='form-control col-sm-4' id='position' name='position'>
+                  <option>ARI</option>
+                  <option>ATL</option>
+                  <option>BAL</option>
+                  <option>BUF</option>
+                  <option>CAR</option>
+                  <option>CHI</option>
+                  <option>CIN</option>
+                  <option>CLE</option>
+                  <option>DAL</option>
+                  <option>DEN</option>
+                  <option>DET</option>
+                  <option>GB</option>
+                  <option>HOU</option>
+                  <option>IND</option>
+                  <option>JAC</option>
+                  <option>KC</option>
+                  <option>LAC</option>
+                  <option>LAR</option>
+                  <option>MIA</option>
+                  <option>MIN</option>
+                  <option>NYG</option>
+                  <option>NYJ</option>
+                  <option>NE</option>
+                  <option>NO</option>
+                  <option>OAK</option>
+                  <option>PHI</option>
+                  <option>PIT</option>
+                  <option>SF</option>
+                  <option>SEA</option>
+                  <option>TB</option>
+                  <option>TEN</option>
+                  <option>WSH</option>
+                </select>
+              </label>
+              <div>
+              <label class='text-inline col-xs-4'>Rookie:</label>
+                <input class=' col-xs-1' type="checkbox" value="Rookie">
+              </div>
+            </div>
+            <div class='form-group col-xs-12'>
+              <button type='submit' class='btn btn-default'>Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class='container'>
+      <!-- makes tabs for all the positions -->
+      <div id="tabs">
+        <ul>
+          <% for (var i = 0; i < positions.length; i++) { %>
+            <li><a href="#tabs-<%= positions[i] %>"><%= positions[i] %></a></li>
+          <% } %>
+        </ul>
+        <!-- sets first posion being looped through -->
+        <% var currPosition = players[0].position %>
+        <% for (var i = 0; i < players.length; i++) { %>
+          <!-- creates tab and table for position -->
+           <div id="tabs-<%= currPosition %>">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th>Name</th>
+                  <th>Team</th>
+                  <th>Rookie</th>
+                  <th>Edit</th>
+                </tr>
+                <!-- loops through all the players at that position and created row if position same and not last entry -->
+                <% while (players[i].position === currPosition && i+1 < players.length) { %>
+                  <tr>
+                    <td><%= players[i].name %></td>
+                    <td><%= players[i].team %></td>
+                    <% if (players[i].rookie) { %>
+                      <td><span class="glyphicon glyphicon-ok"></td>
+                    <% } else { %>
+                      <td></td>
+                    <% } %>
+                    <td><a href='/admin/players/<%= players[i].id %>'><span class="glyphicon glyphicon-pencil"></span></a></td>
+                  </tr>
+                  <!-- as for loop incriments, it does not incrament for last run through of while loop -->
+                  <% if (players[i+1].position === currPosition && i+1 < players.length) { %>
+                    <% i++ %>
+                  <% } else { %>
+                    <% break %>
+                  <% } %>
+                <% } %>
+                <!-- very last player not populating, added here. Will dry out code later -->
+                <% if (i+1 === players.length) { %>
+                  <tr>
+                    <td><a href='/admin/players/<%= players[players.length - 1].id %>'><%= players[players.length - 1].name %></td>
+                    <td><%= players[players.length - 1].team %></td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          <!-- changes to next position -->
+          <% if (i+1 < players.length) { %>
+            <% currPosition = players[i+1].position %>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

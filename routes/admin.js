@@ -80,6 +80,24 @@ module.exports = (knex) => {
     }
   });
 
+  router.get('/admin/players', (req, res) => {
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          const queryPlayers = getPlayers(positions, knex);
+          queryPlayers.then(function(players){
+            res.render('admin/players', {players: players, positions: positions});
+          });
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
+    }
+  });
+
   router.get('/admin/login', (req, res) => {
     res.render('admin/login');
   });

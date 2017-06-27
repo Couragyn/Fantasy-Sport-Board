@@ -25,12 +25,12 @@ $(document).ready(function() {
 function validate() {
   var password = $("#password").val();
   var confirmPassword = $("#confirmPassword").val();
- 
+
     if(password == confirmPassword) {
-       $("#validate-status").text("Passwords match!");        
+       $("#validate-status").text("Passwords match!");
     }
     else {
-        $("#validate-status").text("Passwords do not match");  
+        $("#validate-status").text("Passwords do not match");
     }
-    
+
 }

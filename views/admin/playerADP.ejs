@@ -5,27 +5,7 @@
     <title>Admin Login</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!-- functionality for tab and drag. to be moved -->
-  <script>
-
-    var positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST', 'DL', 'LB', 'DB', 'DE', 'DT', 'CB', 'S'];
-    $(function() {
-      for (i = 0; i < positions.length; i++) {
-        $( "#sortable-"+positions[i] ).sortable({
-          placeholder: "ui-state-highlight",
-          cursor: 'crosshair',
-          update: function(event, ui) {
-            var thisPosit = $(this).attr("id").split('-')[1];
-            var Order = $(this).sortable('toArray').toString();
-            $('#order-'+thisPosit).val(Order);
-          }
-        });
-        $( "#sortable-"+positions[i] ).disableSelection();
-      }
-      $( "#tabs" ).tabs();
-    });
-  </script>
+  <script type="text/javascript" src="/scripts/admin.js"></script>
 
   </head>
 
