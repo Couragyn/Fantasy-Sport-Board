@@ -1,5 +1,5 @@
 // Updates the player rankings
-module.exports = function updatePlayers(ranking, knex) {
+module.exports = function updatePlayerRankings(ranking, knex) {
   for (let i = 0; i < ranking.length; i++) {
     knex('player')
       .where('id', '=', ranking[i])
