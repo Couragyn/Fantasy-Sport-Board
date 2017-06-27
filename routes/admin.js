@@ -20,24 +20,64 @@ module.exports = (knex) => {
   }))
 
   router.get('/admin', (req, res) => {
-    const queryPlayers = getPlayers(positions, knex);
-    queryPlayers.then(function(players){
-      res.render('admin/players', {players: players, positions: positions});
-    });
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          const queryPlayers = getPlayers(positions, knex);
+          queryPlayers.then(function(players){
+            res.render('admin/index', {players: players, positions: positions});
+          });
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
+    }
   });
 
-  router.post('/admin/players', (req, res) => {
-    let updateArray = [];
-    let updateObj = {};
-    for (let i = 0; i < positions.length; i++) {
-      let currPosition = positions[i]
-      if (eval(`req.body.${currPosition}`)) {
-        let updateArray = eval(`req.body.${currPosition}`).split(',');
-        const updateObj = updatePlayers(updateArray, knex);
-        updateObj;
-      }
+  router.get('/admin/playeradp', (req, res) => {
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          const queryPlayers = getPlayers(positions, knex);
+          queryPlayers.then(function(players){
+            res.render('admin/playerADP', {players: players, positions: positions});
+          });
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
     }
-    res.redirect('/admin');
+  });
+
+  router.post('/admin/playeradp', (req, res) => {
+    if (req.session.adminName){
+      const validate = validateUniqueUsername(req.session.adminName, knex);
+      validate.then(function(validateResults){
+        if (!validateResults) {
+          let updateArray = [];
+          let updateObj = {};
+          for (let i = 0; i < positions.length; i++) {
+            let currPosition = positions[i]
+            if (eval(`req.body.${currPosition}`)) {
+              let updateArray = eval(`req.body.${currPosition}`).split(',');
+              const updateObj = updatePlayers(updateArray, knex);
+              updateObj;
+            }
+          }
+          res.redirect('/admin');
+        } else {
+          res.redirect('/admin/login');
+        }
+      });
+    } else {
+      res.redirect('/admin/login');
+    }
   });
 
   router.get('/admin/login', (req, res) => {
@@ -45,7 +85,6 @@ module.exports = (knex) => {
   });
 
   router.post('/admin/login', (req, res) => {
-
     let username = req.body['username'];
     let password = req.body['password'];
     const validate = validateUniqueUsername(username, knex);
