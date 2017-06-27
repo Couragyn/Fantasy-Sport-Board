@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Account</title>
+  </head>
+
+  <body>
+    <% include ../partials/_nav %>
+    <div class='container'>
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-heading">
+          <div class='user-info'>
+            <p>Current Username: <%= username %></p>
+            <br>
+            <p>Current Email: <%= email %></p>
+            <br>
+          </div>
+            <form action='/account/username' method='POST'>
+              <div class='form-group'>
+                <div class="panel-title">Change Your Username</div>
+                <br>
+                <label for='username'>New Username</label>
+                <input type='text' name='username' class='form-control' id='username'>
+              <div>    
+                <button type='submit' class='btn btn-default'>Submit</button>
+              </div>
+              <div>
+              <% if (!uniqueUsername) { %>
+                <p>Username unavailable</p>
+              <% } else { %>
+                <p> </p>
+              <% } %>
+            </div>
+            </form>
+            <form action='/account/email' method='POST'>
+              <div class='form-group'>
+                <div class="panel-title">Change Your Email</div>
+                <br>
+                <label for='email'>New Email</label>
+                <input type='email' name='email' class='form-control' id='email'>
+              <div>    
+                <button type='submit' class='btn btn-default'>Submit</button>
+              </div>
+            </form>
+            <form action='/account/password' method='POST'>
+              <div class='form-group'>
+                <div class="panel-title">Change Your Password</div>
+                <br>
+                <label for='oldPassword'>Old Password</label>
+                <input type='password' name='oldPassword' class='form-control' id='oldPassword'>
+              <div>
+              <div class='form-group'>                
+                  <label for='password'>New Password</label>
+                  <input type='password' name='password' class='form-control' id='password'>
+              </div>
+              <div class='form-group'>
+                  <label for='confirmPassword'>Confrim New Password</label>
+                  <input type='password' name='confirmPassword' class='form-control' id='confirmPassword'>
+              </div>  
+              <div>
+                <p id="validate-status"></p>
+              </div>      
+                <button type='submit' class='btn btn-default'>Submit</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
