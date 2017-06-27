@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/_head %>
+    <title>Admin Login</title>
+  </head>
+
+  <body>
+    <div class='container'>
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-heading">
+          <div class="panel-title">Admin Login</div>
+        </div>
+        <div class="panel-heading">
+          <form action='/admin/login' method='POST'>
+            <div class='form-group'>
+              <label for='username'>Userame</label>
+              <input type='text' name='username' class='form-control' id='username'>
+            </div>
+            <div class='form-group'>
+              <label for='password'>Password</label>
+              <input type='password' name='password' class='form-control' id='password'>
+            </div>
+            <div>
+              <button type='submit' class='btn btn-default'>Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,7 +8,7 @@ module.exports = function addTeam(teamID, knex) {
         resolve();
       })
       .catch(function(err){
-        console.log(err);
+        reject(err);
       })
   })
 }

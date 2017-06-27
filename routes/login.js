@@ -21,7 +21,7 @@ module.exports = (knex) => {
     res.render('user/login', {userID: req.session.userID, username: req.session.username});
   });
 
-router.post('/login', (req, res) => {
+  router.post('/login', (req, res) => {
 
     let username = req.body['username'];
     let password = req.body['password'];

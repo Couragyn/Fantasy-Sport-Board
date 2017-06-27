@@ -163,8 +163,6 @@ module.exports = (knex) => {
       if (leagueData.commish_id === req.session.userID) {
         let getLeaguePositons = viewLeaguePositions(req.params.leagueID, knex);
         getLeaguePositons.then(function(leaguePositions) {
-          console.log(leagueData);
-          console.log(leaguePositions);
           res.render('football/league/edit', {userID: req.session.userID, username: req.session.username, data: leagueData, positions: leaguePositions});
         })
       } else {

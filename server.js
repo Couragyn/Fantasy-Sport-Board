@@ -20,7 +20,9 @@ const draftRoutes = require('./routes/draft');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
 const accountRoutes = require('./routes/account');
+const adminRoutes = require('./routes/admin');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -78,6 +80,20 @@ app.all('/login', loginRoutes(knex));
 app.get('/logout', (req, res) => {
  req.session.userID = null;
  req.session.username = null;
+ res.redirect('/');
+});
+
+// admin routes
+app.get('/admin', adminRoutes(knex));
+app.all('/admin/login', adminRoutes(knex));
+app.all('/admin/playeradp', adminRoutes(knex));
+app.get('/admin/players', adminRoutes(knex));
+app.post('/admin/players/new', adminRoutes(knex));
+app.all('/admin/players/:playerID', adminRoutes(knex));
+app.post('/admin/players/:playerID/delete', adminRoutes(knex));
+app.get('/admin/logout', (req, res) => {
+ req.session.adminID = null;
+ req.session.adminName = null;
  res.redirect('/');
 });
 
