@@ -20,7 +20,6 @@ const draftRoutes = require('./routes/draft');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const userRoutes = require('./routes/user');
-const adminRoutes = require('./routes/admin');
 const accountRoutes = require('./routes/account');
 const adminRoutes = require('./routes/admin');
 
