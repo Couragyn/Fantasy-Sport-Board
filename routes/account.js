@@ -26,12 +26,20 @@ module.exports = (knex) => {
     })
   });
 
-  router.post('/account/email', (req, res) => {
-    updateEmail(req.session.userID, req.body['email'], knex);
-    res.redirect('/');
-  });
+  router.post('/account', (req, res) => {
 
-  router.post('/account/username', (req, res) => {
+    updateEmail(req.session.userID, req.body['email'], knex);
+    
+    const login = validateLogin(req.session.username, knex);
+    login.then(function(login){
+      if (bcrypt.compareSync(req.body['oldPassword'], login)) {
+        updatePassword(req.session.userID, bcrypt.hashSync(req.body['password'], 10), knex);
+        res.redirect('/');  
+      } else {
+       res.redirect('/account');
+      }
+    })
+
     let newUsername = req.body['username'];
     let email = getEmail(req.session.userID, knex);
     const validate = validateUniqueUsername(newUsername, knex);
@@ -46,19 +54,8 @@ module.exports = (knex) => {
         req.session.username = newUsername;
         res.redirect('/');
       }
-    });   
-  });
+    }); 
 
-  router.post('/account/password', (req, res) => {
-    const login = validateLogin(req.session.username, knex);
-    login.then(function(login){
-      if (bcrypt.compareSync(req.body['oldPassword'], login)) {
-        updatePassword(req.session.userID, bcrypt.hashSync(req.body['password'], 10), knex);
-        res.redirect('/');  
-      } else {
-       res.redirect('/account');
-      }
-    })
-  })
+  });
  return router;
 }
