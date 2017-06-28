@@ -32,15 +32,14 @@ module.exports = (knex) => {
     let newPassword = req.body['password'];
     let newEmail = req.body['email'];
     let userID = req.session.userID;
-
-    console.log('newUsername:', newUsername, 'newPassword:', newPassword, 'newEmail:', newEmail);
+    let username = req.session.username;
 
     if (newEmail !== '') {
       updateEmail(userID, newEmail, knex);
     }
 
     if (newPassword !== ''){
-      const login = validateLogin(req.session.username, knex);
+      const login = validateLogin(username, knex);
       login.then(function(login){
         if (bcrypt.compareSync(req.body['oldPassword'], login)) {
           updatePassword(userID, bcrypt.hashSync(newPassword, 10), knex); 
@@ -58,7 +57,7 @@ module.exports = (knex) => {
         if (!validateResults){
           res.status(404);
           email.then(function(email){
-            res.render('user/account', {userID: userID, username: req.session.username, email: email, uniqueUsername: validateResults});
+            res.render('user/account', {userID: userID, username: username, email: email, uniqueUsername: validateResults});
           })
         } else {
           updateUsername(userID, newUsername, knex);

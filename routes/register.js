@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const createNewUser = require('../db/dbFunc/createNewUser');
 const validateUniqueUsername = require('../db/dbFunc/validateUniqueUsername');
+const registrationEmail = require('../public/scripts/mailgun/registration');
 
 module.exports = (knex) => {
 
@@ -34,6 +35,7 @@ module.exports = (knex) => {
         createNewUser(username, email, password, knex).then(function(userID) {
           req.session.userID = userID;
           req.session.username = username;
+          registrationEmail(username, email);
           res.redirect('/football');
         })
       }
