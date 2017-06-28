@@ -43,7 +43,7 @@ app.use(express.static('public'));
 
 app.use(cookieSession({
         name: 'session',
-        secret: 'urlshy5hdyjtid'
+        secret: process.env.SECRET
     }))
 
 // Home page

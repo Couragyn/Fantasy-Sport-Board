@@ -1,7 +1,6 @@
-var api_key = 'key-624558cc4e4a1a9b1656d427ee6b8931';
-var domain = 'sandbox9a8de5a1023443a8b97bab5b8a0dd9f9.mailgun.org';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+require('dotenv').config();
 
+var mailgun = require('mailgun-js')({apiKey: process.env.MG_API_KEY, domain: process.env.MG_DOMAIN});
 module.exports = (username, email) => {
 
   var data = {
@@ -12,6 +11,5 @@ module.exports = (username, email) => {
   };
 
   mailgun.messages().send(data, function (error, body) {
-    console.log(body);
   });
 }

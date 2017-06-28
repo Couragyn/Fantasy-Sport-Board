@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
@@ -10,7 +12,7 @@ module.exports = (knex) => {
 
   router.use(cookieSession({
         name: 'session',
-        secret: 'urlshy5hdyjtid'
+        secret: process.env.SECRET
     }))
 
   router.get('/football', (req, res) => {
