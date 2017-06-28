@@ -8,7 +8,78 @@
   <body>
     <% include ../../partials/_nav %>
     <div class='container'>
-      <h1>Draft</h1>
+      <div class="col-xs-3">
+      </div>
+      <div class="col-xs-6">
+        <button data-toggle="collapse" data-target="#tabs" type="button" class="btn btn-default">Toggle Players</button>
+        <div id="tabs" style="max-height:400px;overflow-y:scroll" class="collapse">
+          <div>
+            <ul>
+              <% for (var i = 0; i < positions.length; i++) { %>
+                <li><a href="#tabs-<%= positions[i] %>"><%= positions[i] %></a></li>
+              <% } %>
+            </ul>
+          </div>
+          <div>
+            <!-- sets first posion being looped through -->
+            <% var currPosition = players[0].position %>
+            <% for (var i = 0; i < players.length; i++) { %>
+              <!-- creates tab and table for position -->
+               <div id="tabs-<%= currPosition %>">
+                <table class="table" id="table-<%= currPosition %>">
+                  <tbody>
+                    <input type="text" id="search-<%= currPosition %>" onkeyup="searchPlayers('<%= currPosition %>')" placeholder="Search for Players">
+                    <tr>
+                      <th>Name</th>
+                      <th>Team</th>
+                      <th>Rookie</th>
+                      <th></th>
+                    </tr>
+                    <!-- loops through all the players at that position and created row if position same and not last entry -->
+                    <% while (players[i].position === currPosition && i+1 < players.length) { %>
+                      <tr>
+                        <td><%= players[i].name %></td>
+                        <td><%= players[i].team %></td>
+                        <% if (players[i].rookie) { %>
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        <% } else { %>
+                          <td></td>
+                        <% } %>
+                        <td><button type="button" class="btn btn-primary btn-xs">Draft</button></td>
+                      </tr>
+                      <!-- as for loop incriments, it does not incrament for last run through of while loop -->
+                      <% if (players[i+1].position === currPosition && i+1 < players.length) { %>
+                        <% i++ %>
+                      <% } else { %>
+                        <% break %>
+                      <% } %>
+                    <% } %>
+                    <!-- very last player not populating, added here. Will dry out code later -->
+                    <% if (i+1 === players.length) { %>
+                      <tr>
+                        <td><%= players[players.length - 1].name %></td>
+                        <td><%= players[players.length - 1].team %></td>
+                        <% if (players[players.length - 1].rookie) { %>
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        <% } else { %>
+                          <td></td>
+                        <% } %>
+                        <td><a href='/admin/players/<%= players[players.length - 1].id %>'><span class="glyphicon glyphicon-pencil"></span></a></td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+              <!-- changes to next position -->
+              <% if (i+1 < players.length) { %>
+                <% currPosition = players[i+1].position %>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-3">
+      </div>
     </div>
     <div class='container'>
       <table class='table table-bordered'>
@@ -27,7 +98,7 @@
               <!-- Standard drafts have the same order each round. It is created accordingly -->
               <% if (info.draft_type === 'Standard') {%>
                 <% for (var i = 0; i < teams.length; i++) {  %>
-                  <td class='cell'>
+                  <td class='cell' id='<%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %>'>
                     <p><%= picks[currentPosition].name %></p>
                     <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
                     <% if (i + 1 === teams.length && info.rounds === round) {  %>
@@ -45,7 +116,7 @@
                 <!-- If even round, draw normally -->
                 <% if (round % 2 != 0 ) { %>
                   <% for (var i = 0; i < teams.length; i++) {  %>
-                    <td class='cell'>
+                    <td class='cell' id='<%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %>'>
                       <p><%= picks[currentPosition].name %></p>
                       <p><%= picks[currentPosition].round %>.<%= picks[currentPosition].pick %></p>
                       <% if (i + 1 === teams.length && info.rounds === round) {  %>
@@ -62,7 +133,7 @@
                 <% } else { %>
                   <% for (var i = 0; i < teams.length; i++) {  %>
                   <%var backPick = currentPosition + 11 - i; %>
-                    <td class='cell'>
+                    <td class='cell' id='<%= picks[backPick].round %>.<%= picks[backPick].pick %>'>
                       <p><%= picks[backPick].name %></p>
                       <p><%= picks[backPick].round %>.<%= picks[backPick].pick %></p>
                       <% if (i === 0 && info.rounds === round) {  %>

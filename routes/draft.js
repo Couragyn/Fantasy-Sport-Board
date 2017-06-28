@@ -11,6 +11,7 @@ const createDraftPicks = require("../db/dbFunc/createDraftPicks");
 const getDraftPicks = require("../db/dbFunc/getDraftPicks");
 const getDraftInfo = require("../db/dbFunc/getDraftInfo");
 const getTeams = require('../db/dbFunc/getTeams');
+const getPlayers = require('../db/dbFunc/getPlayers');
 
 module.exports = (knex) => {
 
@@ -56,7 +57,14 @@ module.exports = (knex) => {
       draftInfo.then(function(info) {
         let viewTeams = getTeams(req.params.leagueID, knex);
         viewTeams.then(function(teams) {
-          res.render("football/draft/view", {userID: req.session.userID, username: req.session.username, picks: picks, info: info, teams: teams });
+          let getLeagueInfo = viewLeagueInfo(req.params.leagueID, knex);
+          getLeagueInfo.then(function(leagueData){
+            let positions = leagueData.positions.split(',');
+            const queryPlayers = getPlayers(positions, knex);
+            queryPlayers.then(function(players){
+              res.render("football/draft/view", {userID: req.session.userID, username: req.session.username, picks: picks, info: info, teams: teams, players: players, positions: positions});
+            });
+          })
         })
       })
     })
